@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0.0",
+  "id": "wanderpick",
+  "display_name": "WanderPick",
+  "seed": 193804725,
+  "identity_summary": "A sunlit postcard loft for local adventure discovery \u2014 live Google Places API only; no crawling and no local places index.",
+  "visual_keywords": [
+    "sky",
+    "postcard",
+    "local-adventure",
+    "afternoon"
+  ],
+  "palette": {
+    "background": "#c8e1e6",
+    "wall": "#e8f0e6",
+    "wall_secondary": "#b9d7dd",
+    "floor": "#6fa4b3",
+    "trim": "#456b5d",
+    "accent": "#e45f49",
+    "accent_secondary": "#e0a95f",
+    "cream": "#fff6dc",
+    "dark": "#29454c"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 23,
+      "depth": 18
+    },
+    "wall_height": 6.7,
+    "wall_thickness": 0.45,
+    "floor_material": "sea-blue painted wood boards",
+    "wall_material": "chalky sky and postcard plaster",
+    "trim_style": "painted wood window bays with rounded caps",
+    "floor_pattern": "painted-boards",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": 1.8,
+        "width": 9.2,
+        "height": 4.25,
+        "sill": 0.9,
+        "treatment": "panoramic map-window with route glass and daybed"
+      }
+    ],
+    "composition": "postcard-loft",
+    "cutaway": "corner-cutaway"
+  },
+  "lighting": {
+    "recipe": "clear afternoon sun from map window, airy sky fill, warm postcard bounce",
+    "environment": "#cfe4e8",
+    "key": "#ffd5a0",
+    "fill": "#8fc7d2",
+    "key_intensity": 2.55,
+    "fill_intensity": 1.55,
+    "exposure": 1.08,
+    "shadow_softness": 5.5
+  },
+  "species": {
+    "name": "Wayfinders",
+    "silhouette": "wayfinders",
+    "material": "matte sky ceramic with canvas sash",
+    "accent_feature": "foxlike compass ears and route sash"
+  },
+  "agents": [
+    {
+      "handle": "wanderpick",
+      "role": "Product orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing live Places results",
+      "last_work": "Verified API-backed local discovery flow",
+      "scale": 1.03,
+      "variant": 0
+    },
+    {
+      "handle": "place-curator",
+      "role": "Experience builder",
+      "station": "builder",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing live Places results",
+      "last_work": "Verified API-backed local discovery flow",
+      "scale": 0.95,
+      "variant": 1
+    },
+    {
+      "handle": "trip-reviewer",
+      "role": "Adventure reviewer",
+      "station": "reviewer",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": null,
+      "last_work": "Verified API-backed local discovery flow",
+      "scale": 0.92,
+      "variant": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Adventure board",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -6.5,
+        0,
+        -2.2
+      ],
+      "rotation": 0.28,
+      "color": "#e45f49",
+      "obstacle_radius": 1.4
+    },
+    {
+      "id": "builder",
+      "label": "Places API bench",
+      "role_type": "builder",
+      "kind": "map-builder-bench",
+      "position": [
+        1.2,
+        0,
+        1.1
+      ],
+      "rotation": -0.18,
+      "color": "#456b5d",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "reviewer",
+      "label": "Postcard review desk",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        7.3,
+        0,
+        2.1
+      ],
+      "rotation": -0.55,
+      "color": "#e0a95f",
+      "obstacle_radius": 1.3
+    }
+  ],
+  "downtime_zone": {
+    "name": "Map-window daybed",
+    "kind": "daybed",
+    "position": [
+      2.0,
+      0,
+      -6.6
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Atlas",
+    "species": "map-fox",
+    "default_state": "wander",
+    "color": "#e3694f",
+    "digest": {
+      "room_burn": "healthy",
+      "last_success": "Live Places result set reviewed",
+      "last_failure": null,
+      "human_action": "Pick one nearby adventure from the live result set."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "concealed-supports",
+    "surface": "dry-erase",
+    "accent": "#e45f49",
+    "face": "#fff6dc",
+    "position": [
+      -11.12,
+      3.15,
+      -4.0
+    ],
+    "job_scope": [
+      "wanderpick",
+      "place-curator",
+      "trip-reviewer"
+    ],
+    "jobs": [
+      {
+        "name": "wanderpick-place-health",
+        "owner": "wanderpick",
+        "schedule": "Weekdays 10:00 local",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next weekday",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "Panoramic route-glass map window and day-trip kit",
+    "clusters": [
+      {
+        "type": "postcard-rack",
+        "position": [
+          -7.8,
+          0,
+          -7.7
+        ],
+        "rotation": 0,
+        "color": "#456b5d"
+      },
+      {
+        "type": "bag-postcards",
+        "position": [
+          8.0,
+          0,
+          -6.5
+        ],
+        "rotation": -0.2,
+        "color": "#e0a95f"
+      },
+      {
+        "type": "compass-table",
+        "position": [
+          -3.2,
+          0,
+          4.7
+        ],
+        "rotation": 0.28,
+        "color": "#456b5d"
+      },
+      {
+        "type": "places-sign",
+        "position": [
+          -6.5,
+          4.55,
+          -8.55
+        ],
+        "rotation": 0,
+        "color": "#e45f49"
+      },
+      {
+        "type": "trail-shelf",
+        "position": [
+          8.8,
+          0,
+          5.1
+        ],
+        "rotation": -0.2,
+        "color": "#456b5d"
+      }
+    ],
+    "accents": [
+      "route pins",
+      "postcards",
+      "canvas day bag",
+      "compass rose",
+      "local-adventure cards",
+      "painted board seams",
+      "live API status"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -11.12,
+      2.33,
+      5.0
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "user-location-history/",
+      "private-itineraries/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "unrelated-memory"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "wanderpick.project-context.json": "9391bfeac5601add37d976f700b68e1b102b6ba8a31712025b1692d83526cd00"
+    },
+    "model_provider": "openai-codex",
+    "model_name": "gpt-5.6-sol-900k",
+    "llm_used": true
+  }
+}
