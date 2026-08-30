@@ -1,0 +1,284 @@
+{
+  "schema_version": "1.0.0",
+  "id": "sample-library",
+  "display_name": "Sample Research Library",
+  "seed": 1335053008,
+  "identity_summary": "A sanitized hand-selected research context rendered as a quiet library room.",
+  "visual_keywords": [
+    "library",
+    "civic",
+    "calm"
+  ],
+  "palette": {
+    "background": "#e8e0d2",
+    "wall": "#53645e",
+    "wall_secondary": "#53645e",
+    "floor": "#8c7358",
+    "trim": "#dfc48d",
+    "accent": "#2e5962",
+    "accent_secondary": "#a35e4b",
+    "cream": "#fff4dc",
+    "dark": "#263238"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 20,
+      "depth": 16
+    },
+    "wall_height": 6,
+    "wall_thickness": 0.45,
+    "floor_material": "matte walnut",
+    "wall_material": "mineral plaster",
+    "trim_style": "layered capped trim",
+    "floor_pattern": "boards",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": -4,
+        "width": 3.2,
+        "height": 3,
+        "sill": 1.4,
+        "treatment": "tall recessed reading windows"
+      },
+      {
+        "type": "window",
+        "wall": "right",
+        "position": 2,
+        "width": 3,
+        "height": 3,
+        "sill": 1.4,
+        "treatment": "tall recessed reading windows"
+      }
+    ],
+    "composition": "sample-studio",
+    "cutaway": "corner-cutaway"
+  },
+  "lighting": {
+    "recipe": "cool skylight with warm table pools",
+    "environment": "#e8e0d2",
+    "key": "#fff1d3",
+    "fill": "#b8d8e8",
+    "key_intensity": 2.8,
+    "fill_intensity": 1.1,
+    "exposure": 1.05,
+    "shadow_softness": 4
+  },
+  "species": {
+    "name": "Contextlings",
+    "silhouette": "round-eared",
+    "material": "matte ceramic",
+    "accent_feature": "role-color sash"
+  },
+  "agents": [
+    {
+      "handle": "research-lead",
+      "role": "orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "mock adapter",
+      "current_work": "Building the room specification",
+      "last_work": "Validated selected project context",
+      "scale": 0.92,
+      "variant": 0
+    },
+    {
+      "handle": "source-reviewer",
+      "role": "reviewer",
+      "station": "builder",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "mock adapter",
+      "current_work": null,
+      "last_work": "Validated selected project context",
+      "scale": 0.99,
+      "variant": 1
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Orchestrator",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -5,
+        0,
+        1.5
+      ],
+      "rotation": 0,
+      "color": "#8c7358",
+      "obstacle_radius": 1.3
+    },
+    {
+      "id": "builder",
+      "label": "Builder",
+      "role_type": "builder",
+      "kind": "workbench",
+      "position": [
+        1.5,
+        0,
+        -2.5
+      ],
+      "rotation": -0.5,
+      "color": "#dfc48d",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "reviewer",
+      "label": "Reviewer",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        5,
+        0,
+        1
+      ],
+      "rotation": 0.4,
+      "color": "#2e5962",
+      "obstacle_radius": 1.2
+    }
+  ],
+  "downtime_zone": {
+    "name": "Window nook",
+    "kind": "rug-nook",
+    "position": [
+      6,
+      0,
+      -4.5
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Room companion",
+    "species": "house-cat",
+    "default_state": "wander",
+    "color": "#2e5962",
+    "digest": {
+      "room_burn": "light",
+      "last_success": "RoomSpec generated",
+      "last_failure": null,
+      "human_action": "Review the generated visual identity."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "fascia",
+    "surface": "cork",
+    "accent": "#2e5962",
+    "face": "#fff4dc",
+    "position": [
+      -5,
+      2.8,
+      -7.65
+    ],
+    "job_scope": [
+      "sample-library",
+      "research-lead",
+      "source-reviewer"
+    ],
+    "jobs": [
+      {
+        "name": "sample-source-refresh",
+        "owner": "research-lead",
+        "schedule": "weekly",
+        "last_run": "not connected",
+        "next_run": "adapter pending",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "stepped research index",
+    "clusters": [
+      {
+        "type": "hero-display",
+        "position": [
+          -1.568,
+          0,
+          -4
+        ],
+        "rotation": 0,
+        "color": "#2e5962"
+      },
+      {
+        "type": "material-library",
+        "position": [
+          5,
+          0,
+          3
+        ],
+        "rotation": -0.4,
+        "color": "#dfc48d"
+      }
+    ],
+    "accents": [
+      "layered wall caps",
+      "recessed openings",
+      "threshold trim",
+      "task cards",
+      "material samples"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -9.65,
+      2.33,
+      4
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "private/",
+      "interviews/raw/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "unrelated-memory"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "sample-library.yaml": "758c2ab7840811efd71d9b72fbe348af0622ab1e34928891cbfb41870b7a8df3"
+    },
+    "model_provider": null,
+    "model_name": null,
+    "llm_used": false
+  }
+}

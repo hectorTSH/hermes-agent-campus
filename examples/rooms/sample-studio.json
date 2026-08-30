@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.0.0",
+  "id": "sample-studio",
+  "display_name": "Sample Maker Studio",
+  "seed": 415603592,
+  "identity_summary": "A sanitized example project that turns selected product notes into a bright shared maker room.",
+  "visual_keywords": [
+    "maker",
+    "sunlit",
+    "orderly"
+  ],
+  "palette": {
+    "background": "#dfeef0",
+    "wall": "#e9dfcf",
+    "wall_secondary": "#e9dfcf",
+    "floor": "#c69b63",
+    "trim": "#52726c",
+    "accent": "#c95f4a",
+    "accent_secondary": "#e9b44c",
+    "cream": "#fff4dc",
+    "dark": "#263238"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 20,
+      "depth": 16
+    },
+    "wall_height": 6,
+    "wall_thickness": 0.45,
+    "floor_material": "matte oak",
+    "wall_material": "warm plaster",
+    "trim_style": "layered capped trim",
+    "floor_pattern": "boards",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": -4,
+        "width": 3.2,
+        "height": 3,
+        "sill": 1.4,
+        "treatment": "deep shop windows with painted frames"
+      },
+      {
+        "type": "window",
+        "wall": "right",
+        "position": 2,
+        "width": 3,
+        "height": 3,
+        "sill": 1.4,
+        "treatment": "deep shop windows with painted frames"
+      }
+    ],
+    "composition": "sample-studio",
+    "cutaway": "corner-cutaway"
+  },
+  "lighting": {
+    "recipe": "soft northern fill and broad warm key",
+    "environment": "#dfeef0",
+    "key": "#fff1d3",
+    "fill": "#b8d8e8",
+    "key_intensity": 2.8,
+    "fill_intensity": 1.1,
+    "exposure": 1.05,
+    "shadow_softness": 4
+  },
+  "species": {
+    "name": "Contextlings",
+    "silhouette": "round-eared",
+    "material": "matte ceramic",
+    "accent_feature": "role-color sash"
+  },
+  "agents": [
+    {
+      "handle": "studio-lead",
+      "role": "orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "mock adapter",
+      "current_work": "Building the room specification",
+      "last_work": "Validated selected project context",
+      "scale": 0.92,
+      "variant": 0
+    },
+    {
+      "handle": "prototype-builder",
+      "role": "builder",
+      "station": "builder",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "mock adapter",
+      "current_work": null,
+      "last_work": "Validated selected project context",
+      "scale": 0.99,
+      "variant": 1
+    },
+    {
+      "handle": "quality-reviewer",
+      "role": "reviewer",
+      "station": "reviewer",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "mock adapter",
+      "current_work": null,
+      "last_work": "Validated selected project context",
+      "scale": 1.06,
+      "variant": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Orchestrator",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -5,
+        0,
+        1.5
+      ],
+      "rotation": 0,
+      "color": "#c69b63",
+      "obstacle_radius": 1.3
+    },
+    {
+      "id": "builder",
+      "label": "Builder",
+      "role_type": "builder",
+      "kind": "workbench",
+      "position": [
+        1.5,
+        0,
+        -2.5
+      ],
+      "rotation": -0.5,
+      "color": "#52726c",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "reviewer",
+      "label": "Reviewer",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        5,
+        0,
+        1
+      ],
+      "rotation": 0.4,
+      "color": "#c95f4a",
+      "obstacle_radius": 1.2
+    }
+  ],
+  "downtime_zone": {
+    "name": "Window nook",
+    "kind": "rug-nook",
+    "position": [
+      6,
+      0,
+      -4.5
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Room companion",
+    "species": "house-cat",
+    "default_state": "wander",
+    "color": "#c95f4a",
+    "digest": {
+      "room_burn": "light",
+      "last_success": "RoomSpec generated",
+      "last_failure": null,
+      "human_action": "Review the generated visual identity."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "fascia",
+    "surface": "cork",
+    "accent": "#c95f4a",
+    "face": "#fff4dc",
+    "position": [
+      -5,
+      2.8,
+      -7.65
+    ],
+    "job_scope": [
+      "sample-studio",
+      "studio-lead",
+      "prototype-builder",
+      "quality-reviewer"
+    ],
+    "jobs": [
+      {
+        "name": "sample-build-check",
+        "owner": "studio-lead",
+        "schedule": "weekday mornings",
+        "last_run": "not connected",
+        "next_run": "adapter pending",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "central prototype plinth",
+    "clusters": [
+      {
+        "type": "hero-display",
+        "position": [
+          0.448,
+          0,
+          -4
+        ],
+        "rotation": 0,
+        "color": "#c95f4a"
+      },
+      {
+        "type": "material-library",
+        "position": [
+          5,
+          0,
+          3
+        ],
+        "rotation": -0.4,
+        "color": "#52726c"
+      }
+    ],
+    "accents": [
+      "layered wall caps",
+      "recessed openings",
+      "threshold trim",
+      "task cards",
+      "material samples"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -9.65,
+      2.33,
+      4
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "private/",
+      "customer-data/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "personal-paths",
+      "client-data",
+      "raw-model-payloads"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "sample-studio.json": "b50df09d1a8fbdb1a163b7e3076c980dc95da4bd583124d2e0a98741271b79c2"
+    },
+    "model_provider": null,
+    "model_name": null,
+    "llm_used": false
+  }
+}

@@ -1,0 +1,22 @@
+schema_version: 1.0.0
+id: sample-library
+display_name: Sample Research Library
+summary: A sanitized hand-selected research context rendered as a quiet library room.
+allowed_sources: [README.md, notes/research-index.md]
+privacy:
+  excluded_sources: [.env, private/, interviews/raw/]
+  prohibited_output_classes: [secrets, credentials, client-data, personal-paths, unrelated-memory]
+visual_identity:
+  keywords: [library, civic, calm]
+  colors: ['#e8e0d2', '#53645e', '#8c7358', '#dfc48d', '#2e5962', '#a35e4b']
+  materials: [matte walnut, mineral plaster, wool]
+  architecture_hint: layered reading room
+  lighting_hint: cool skylight with warm table pools
+  openings_hint: tall recessed reading windows
+  hero_feature: stepped research index
+  pet: house cat
+agents:
+  - {handle: research-lead, role: orchestrator, team_member: true}
+  - {handle: source-reviewer, role: reviewer, team_member: true}
+jobs:
+  - {name: sample-source-refresh, owner: research-lead, schedule: weekly, enabled: true}

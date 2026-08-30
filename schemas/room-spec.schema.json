@@ -1,0 +1,861 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hermes-agent-campus.dev/schemas/room-spec/v1.json",
+  "title": "RoomSpec v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "display_name",
+    "seed",
+    "identity_summary",
+    "visual_keywords",
+    "palette",
+    "architecture",
+    "lighting",
+    "species",
+    "agents",
+    "stations",
+    "downtime_zone",
+    "pet",
+    "jobs_wall",
+    "props",
+    "door",
+    "privacy",
+    "build_metadata"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,47}$"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "identity_summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "visual_keywords": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "background",
+        "wall",
+        "wall_secondary",
+        "floor",
+        "trim",
+        "accent",
+        "accent_secondary",
+        "cream",
+        "dark"
+      ],
+      "properties": {
+        "background": {
+          "$ref": "#/$defs/color"
+        },
+        "wall": {
+          "$ref": "#/$defs/color"
+        },
+        "wall_secondary": {
+          "$ref": "#/$defs/color"
+        },
+        "floor": {
+          "$ref": "#/$defs/color"
+        },
+        "trim": {
+          "$ref": "#/$defs/color"
+        },
+        "accent": {
+          "$ref": "#/$defs/color"
+        },
+        "accent_secondary": {
+          "$ref": "#/$defs/color"
+        },
+        "cream": {
+          "$ref": "#/$defs/color"
+        },
+        "dark": {
+          "$ref": "#/$defs/color"
+        }
+      }
+    },
+    "architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "footprint",
+        "wall_height",
+        "wall_thickness",
+        "floor_material",
+        "wall_material",
+        "trim_style",
+        "floor_pattern",
+        "openings",
+        "composition",
+        "cutaway"
+      ],
+      "properties": {
+        "footprint": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "width",
+            "depth"
+          ],
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 12,
+              "maximum": 32
+            },
+            "depth": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 26
+            }
+          }
+        },
+        "wall_height": {
+          "type": "number",
+          "minimum": 4,
+          "maximum": 10
+        },
+        "wall_thickness": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 1
+        },
+        "floor_material": {
+          "type": "string",
+          "minLength": 2
+        },
+        "wall_material": {
+          "type": "string",
+          "minLength": 2
+        },
+        "trim_style": {
+          "type": "string",
+          "minLength": 2
+        },
+        "floor_pattern": {
+          "enum": [
+            "boards",
+            "parquet",
+            "tile",
+            "carpet",
+            "painted-boards",
+            "birch-planks",
+            "maple-planks"
+          ]
+        },
+        "openings": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/opening"
+          }
+        },
+        "composition": {
+          "enum": [
+            "residential-l",
+            "clinic-gallery",
+            "closed-war-room",
+            "print-studio",
+            "postcard-loft",
+            "civic-briefing-loft",
+            "sample-studio"
+          ]
+        },
+        "cutaway": {
+          "enum": [
+            "front-open",
+            "corner-cutaway",
+            "roofless"
+          ]
+        }
+      }
+    },
+    "lighting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipe",
+        "environment",
+        "key",
+        "fill",
+        "key_intensity",
+        "fill_intensity",
+        "exposure",
+        "shadow_softness"
+      ],
+      "properties": {
+        "recipe": {
+          "type": "string"
+        },
+        "environment": {
+          "$ref": "#/$defs/color"
+        },
+        "key": {
+          "$ref": "#/$defs/color"
+        },
+        "fill": {
+          "$ref": "#/$defs/color"
+        },
+        "key_intensity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 8
+        },
+        "fill_intensity": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 4
+        },
+        "exposure": {
+          "type": "number",
+          "minimum": 0.4,
+          "maximum": 2.2
+        },
+        "shadow_softness": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 8
+        }
+      }
+    },
+    "species": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "silhouette",
+        "material",
+        "accent_feature"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "silhouette": {
+          "enum": [
+            "round-eared",
+            "chelonians",
+            "aureans",
+            "foldlings",
+            "wayfinders",
+            "civic-moths"
+          ]
+        },
+        "material": {
+          "type": "string"
+        },
+        "accent_feature": {
+          "type": "string"
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/agent"
+      }
+    },
+    "stations": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 8,
+      "contains": {
+        "type": "object",
+        "properties": {
+          "role_type": {
+            "const": "orchestrator"
+          }
+        },
+        "required": [
+          "role_type"
+        ]
+      },
+      "items": {
+        "$ref": "#/$defs/station"
+      }
+    },
+    "downtime_zone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "kind",
+        "position",
+        "capacity"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "couch",
+            "recovery",
+            "snack-nook",
+            "daybed",
+            "window-bench",
+            "rug-nook"
+          ]
+        },
+        "position": {
+          "$ref": "#/$defs/position"
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        }
+      }
+    },
+    "pet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "species",
+        "default_state",
+        "color",
+        "digest"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "species": {
+          "enum": [
+            "house-cat",
+            "slow-tortoise",
+            "coin-scarab",
+            "paper-crane",
+            "map-fox",
+            "courier-moth"
+          ]
+        },
+        "default_state": {
+          "enum": [
+            "asleep",
+            "wander",
+            "hot-loop",
+            "doorway",
+            "attend-agent",
+            "pipeline",
+            "frozen"
+          ]
+        },
+        "color": {
+          "$ref": "#/$defs/color"
+        },
+        "digest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "room_burn",
+            "last_success",
+            "last_failure",
+            "human_action"
+          ],
+          "properties": {
+            "room_burn": {
+              "type": "string"
+            },
+            "last_success": {
+              "type": "string"
+            },
+            "last_failure": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "human_action": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "jobs_wall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "mount",
+        "surface",
+        "accent",
+        "face",
+        "position",
+        "job_scope",
+        "jobs"
+      ],
+      "properties": {
+        "label": {
+          "const": "JOB WALL"
+        },
+        "mount": {
+          "enum": [
+            "fascia",
+            "millwork",
+            "concealed-supports",
+            "dispatch-rail"
+          ]
+        },
+        "surface": {
+          "enum": [
+            "cork",
+            "dry-erase",
+            "dispatch-rail",
+            "ledger",
+            "household-board",
+            "clinic-board"
+          ]
+        },
+        "accent": {
+          "$ref": "#/$defs/color"
+        },
+        "face": {
+          "$ref": "#/$defs/color"
+        },
+        "position": {
+          "$ref": "#/$defs/position"
+        },
+        "job_scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "jobs": {
+          "type": "array",
+          "maxItems": 24,
+          "items": {
+            "$ref": "#/$defs/job"
+          }
+        }
+      }
+    },
+    "props": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hero",
+        "clusters",
+        "accents"
+      ],
+      "properties": {
+        "hero": {
+          "type": "string",
+          "minLength": 2
+        },
+        "clusters": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/cluster"
+          }
+        },
+        "accents": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "door": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "position",
+        "destinations"
+      ],
+      "properties": {
+        "label": {
+          "const": "Campus"
+        },
+        "position": {
+          "$ref": "#/$defs/position"
+        },
+        "destinations": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/destination"
+          }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "excluded_sources",
+        "prohibited_output_classes",
+        "sanitized"
+      ],
+      "properties": {
+        "excluded_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prohibited_output_classes": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "secrets",
+              "credentials",
+              "wallet-material",
+              "phi",
+              "client-data",
+              "personal-paths",
+              "unrelated-memory",
+              "raw-model-payloads"
+            ]
+          }
+        },
+        "sanitized": {
+          "const": true
+        }
+      }
+    },
+    "build_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generator_version",
+        "source_hashes",
+        "model_provider",
+        "model_name",
+        "llm_used"
+      ],
+      "properties": {
+        "generator_version": {
+          "type": "string"
+        },
+        "source_hashes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "model_provider": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "llm_used": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "position": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "number"
+      }
+    },
+    "opening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "wall",
+        "position",
+        "width",
+        "height",
+        "sill",
+        "treatment"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "window",
+            "doorway",
+            "interior-arch"
+          ]
+        },
+        "wall": {
+          "enum": [
+            "back",
+            "left",
+            "right"
+          ]
+        },
+        "position": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "height": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "sill": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "treatment": {
+          "type": "string"
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "handle",
+        "role",
+        "station",
+        "state",
+        "team_member",
+        "model",
+        "usage",
+        "current_work",
+        "last_work",
+        "scale",
+        "variant"
+      ],
+      "properties": {
+        "handle": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "station": {
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "working",
+            "idle",
+            "away",
+            "error"
+          ]
+        },
+        "team_member": {
+          "type": "boolean"
+        },
+        "model": {
+          "type": "string"
+        },
+        "usage": {
+          "type": "string"
+        },
+        "current_work": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_work": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "number",
+          "minimum": 0.75,
+          "maximum": 1.3
+        },
+        "variant": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        }
+      }
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "role_type",
+        "kind",
+        "position",
+        "rotation",
+        "color",
+        "obstacle_radius"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "role_type": {
+          "enum": [
+            "orchestrator",
+            "builder",
+            "reviewer",
+            "specialist"
+          ]
+        },
+        "kind": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/position"
+        },
+        "rotation": {
+          "type": "number"
+        },
+        "color": {
+          "$ref": "#/$defs/color"
+        },
+        "obstacle_radius": {
+          "type": "number",
+          "minimum": 0.4,
+          "maximum": 3
+        }
+      }
+    },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "owner",
+        "schedule",
+        "last_run",
+        "next_run",
+        "enabled"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "schedule": {
+          "type": "string"
+        },
+        "last_run": {
+          "type": "string"
+        },
+        "next_run": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cluster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "position",
+        "rotation",
+        "color"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/$defs/position"
+        },
+        "rotation": {
+          "type": "number"
+        },
+        "color": {
+          "$ref": "#/$defs/color"
+        }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "home",
+            "tsh",
+            "folio-work-kits",
+            "midas",
+            "wanderpick",
+            "agent-staff"
+          ]
+        },
+        "label": {
+          "enum": [
+            "Home",
+            "TSH",
+            "Folio Work Kits (DPF)",
+            "Midas",
+            "WanderPick",
+            "Agent Staff"
+          ]
+        }
+      }
+    }
+  }
+}

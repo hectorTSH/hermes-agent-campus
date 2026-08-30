@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "id": "sample-studio",
+  "display_name": "Sample Maker Studio",
+  "summary": "A sanitized example project that turns selected product notes into a bright shared maker room.",
+  "allowed_sources": ["README.md", "notes/product.md"],
+  "privacy": {"excluded_sources": [".env", "private/", "customer-data/"], "prohibited_output_classes": ["secrets", "credentials", "personal-paths", "client-data", "raw-model-payloads"]},
+  "visual_identity": {"keywords": ["maker", "sunlit", "orderly"], "colors": ["#dfeef0", "#e9dfcf", "#c69b63", "#52726c", "#c95f4a", "#e9b44c"], "materials": ["matte oak", "warm plaster", "painted steel"], "architecture_hint": "open maker studio with layered wall caps", "lighting_hint": "soft northern fill and broad warm key", "openings_hint": "deep shop windows with painted frames", "hero_feature": "central prototype plinth", "pet": "house cat"},
+  "agents": [{"handle": "studio-lead", "role": "orchestrator", "team_member": true}, {"handle": "prototype-builder", "role": "builder", "team_member": true}, {"handle": "quality-reviewer", "role": "reviewer", "team_member": true}],
+  "jobs": [{"name": "sample-build-check", "owner": "studio-lead", "schedule": "weekday mornings", "enabled": true}]
+}
