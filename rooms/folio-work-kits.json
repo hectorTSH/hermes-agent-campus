@@ -1,0 +1,331 @@
+{
+  "schema_version": "1.0.0",
+  "id": "folio-work-kits",
+  "display_name": "Folio Work Kits (DPF)",
+  "seed": 152037891,
+  "identity_summary": "Folio Work Kits: a paper-white and kraft print studio where practical founder tools are printed, packed, reviewed, and shipped.",
+  "visual_keywords": [
+    "paper-white",
+    "kraft",
+    "print-studio",
+    "product-kits"
+  ],
+  "palette": {
+    "background": "#dce7e2",
+    "wall": "#f2ecdf",
+    "wall_secondary": "#d3b888",
+    "floor": "#d9b77b",
+    "trim": "#765338",
+    "accent": "#e1543d",
+    "accent_secondary": "#4c8b83",
+    "cream": "#fff7e4",
+    "dark": "#263a3a"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 24,
+      "depth": 18
+    },
+    "wall_height": 6.8,
+    "wall_thickness": 0.46,
+    "floor_material": "sealed light birch planks",
+    "wall_material": "paper-white plaster with kraft millwork",
+    "trim_style": "thin birch caps and folded-paper fascia",
+    "floor_pattern": "birch-planks",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": -6.2,
+        "width": 4.3,
+        "height": 3.8,
+        "sill": 0.85,
+        "treatment": "deep shop-front frame with pale street view"
+      },
+      {
+        "type": "window",
+        "wall": "back",
+        "position": 6.2,
+        "width": 4.3,
+        "height": 3.8,
+        "sill": 0.85,
+        "treatment": "deep shop-front frame with pale street view"
+      }
+    ],
+    "composition": "print-studio",
+    "cutaway": "front-open"
+  },
+  "lighting": {
+    "recipe": "crisp print-shop overhead key, pale storefront fill, restrained warm packing lights",
+    "environment": "#e7eee8",
+    "key": "#fff4db",
+    "fill": "#afd0cb",
+    "key_intensity": 2.65,
+    "fill_intensity": 1.65,
+    "exposure": 1.12,
+    "shadow_softness": 5
+  },
+  "species": {
+    "name": "Foldlings",
+    "silhouette": "foldlings",
+    "material": "matte folded paper with ink-color sash",
+    "accent_feature": "origami ear fins and coral registration sash"
+  },
+  "agents": [
+    {
+      "handle": "dpf",
+      "role": "Studio orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Preparing a founder work kit",
+      "last_work": "Reviewed the sanitized product queue",
+      "scale": 1.04,
+      "variant": 0
+    },
+    {
+      "handle": "kit-builder",
+      "role": "Product kit builder",
+      "station": "builder",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Preparing a founder work kit",
+      "last_work": "Reviewed the sanitized product queue",
+      "scale": 0.96,
+      "variant": 1
+    },
+    {
+      "handle": "quality-reviewer",
+      "role": "Print and pack reviewer",
+      "station": "reviewer",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": null,
+      "last_work": "Reviewed the sanitized product queue",
+      "scale": 0.93,
+      "variant": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Catalog wall",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -7.1,
+        0,
+        -2.2
+      ],
+      "rotation": 0.25,
+      "color": "#e1543d",
+      "obstacle_radius": 1.4
+    },
+    {
+      "id": "builder",
+      "label": "Print station",
+      "role_type": "builder",
+      "kind": "print-bench",
+      "position": [
+        0,
+        0,
+        -2.4
+      ],
+      "rotation": 0,
+      "color": "#4c8b83",
+      "obstacle_radius": 1.7
+    },
+    {
+      "id": "reviewer",
+      "label": "Proof and pack desk",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        7.2,
+        0,
+        1.6
+      ],
+      "rotation": -0.5,
+      "color": "#765338",
+      "obstacle_radius": 1.5
+    }
+  ],
+  "downtime_zone": {
+    "name": "Kettle and snack nook",
+    "kind": "snack-nook",
+    "position": [
+      8.1,
+      0,
+      5.8
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Folio",
+    "species": "paper-crane",
+    "default_state": "pipeline",
+    "color": "#f7efe0",
+    "digest": {
+      "room_burn": "healthy",
+      "last_success": "Sample kit proof approved",
+      "last_failure": null,
+      "human_action": "Review the next sanitized kit proof."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "fascia",
+    "surface": "cork",
+    "accent": "#e1543d",
+    "face": "#fff7e4",
+    "position": [
+      -11.62,
+      3.2,
+      -4.2
+    ],
+    "job_scope": [
+      "folio-work-kits",
+      "dpf",
+      "kit-builder",
+      "quality-reviewer"
+    ],
+    "jobs": [
+      {
+        "name": "folio-kit-catalog-check",
+        "owner": "dpf",
+        "schedule": "Weekdays 09:00 local",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next weekday",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "Registration-coral print press and packed-kit wall",
+    "clusters": [
+      {
+        "type": "printing-press",
+        "position": [
+          -1.2,
+          0,
+          -6.4
+        ],
+        "rotation": 0,
+        "color": "#4c8b83"
+      },
+      {
+        "type": "kit-shelves",
+        "position": [
+          8.9,
+          0,
+          -8.35
+        ],
+        "rotation": 0,
+        "color": "#765338"
+      },
+      {
+        "type": "packing-bench",
+        "position": [
+          4.7,
+          0,
+          3.7
+        ],
+        "rotation": -0.35,
+        "color": "#d8b77b"
+      },
+      {
+        "type": "folio-sign",
+        "position": [
+          0,
+          5.25,
+          -8.55
+        ],
+        "rotation": 0,
+        "color": "#e1543d"
+      },
+      {
+        "type": "founder-tools",
+        "position": [
+          -1.4,
+          0,
+          5.3
+        ],
+        "rotation": 0.08,
+        "color": "#765338"
+      }
+    ],
+    "accents": [
+      "registration marks",
+      "kraft sleeves",
+      "stacked product kits",
+      "paper rolls",
+      "proof cards",
+      "birch edge bands",
+      "packing labels"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -11.62,
+      2.33,
+      5.1
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "orders/private/",
+      "customer-data/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "raw-model-payloads"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "folio-work-kits.project-context.json": "659c46b86304b3f570c546e17741b389d1eb09b3f1a134cb0a4b4fa59cff711c"
+    },
+    "model_provider": "openai-codex",
+    "model_name": "gpt-5.6-sol-900k",
+    "llm_used": true
+  }
+}

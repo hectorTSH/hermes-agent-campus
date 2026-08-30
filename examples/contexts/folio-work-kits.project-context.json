@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "id": "folio-work-kits",
+  "display_name": "Folio Work Kits (DPF)",
+  "summary": "Folio Work Kits is a paper-first digital product studio making practical founder tools for time, business, and technology fluency.",
+  "allowed_sources": [
+    "README.md",
+    "notes/design-lock.md",
+    "notes/projects.md"
+  ],
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "orders/private/",
+      "customer-data/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "raw-model-payloads"
+    ]
+  },
+  "visual_identity": {
+    "keywords": [
+      "paper-white",
+      "kraft",
+      "print-studio",
+      "product-kits"
+    ],
+    "colors": [
+      "#e7e2d5",
+      "#f4efe3",
+      "#d8b77b",
+      "#7b5a3a",
+      "#e25b45",
+      "#4d8b83"
+    ],
+    "materials": [
+      "light birch",
+      "paper-white plaster",
+      "kraft board"
+    ],
+    "architecture_hint": "shop-front print and packing studio",
+    "lighting_hint": "crisp overhead print lights with soft storefront fill",
+    "openings_hint": "two broad shop-front windows",
+    "hero_feature": "working print press and wall of packed kits",
+    "pet": "paper crane"
+  },
+  "agents": [
+    {
+      "handle": "dpf",
+      "role": "studio orchestrator",
+      "team_member": true
+    },
+    {
+      "handle": "kit-builder",
+      "role": "product builder",
+      "team_member": true
+    },
+    {
+      "handle": "quality-reviewer",
+      "role": "kit reviewer",
+      "team_member": true
+    }
+  ],
+  "jobs": [
+    {
+      "name": "folio-kit-catalog-check",
+      "owner": "dpf",
+      "schedule": "Weekdays 09:00 local",
+      "enabled": true
+    }
+  ]
+}
