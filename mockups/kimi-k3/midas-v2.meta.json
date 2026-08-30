@@ -1,0 +1,31 @@
+{
+  "model_requested": "moonshotai/kimi-k3",
+  "model_returned": "moonshotai/kimi-k3",
+  "label": "openrouter/kimi-k3",
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 839,
+    "completion_tokens": 7983,
+    "total_tokens": 8822,
+    "cost": 0.120868308,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 64,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.1220892,
+      "upstream_inference_prompt_cost": 0.0023442,
+      "upstream_inference_completions_cost": 0.119745
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 38,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "content_chars": 19321,
+  "has_reasoning": true
+}

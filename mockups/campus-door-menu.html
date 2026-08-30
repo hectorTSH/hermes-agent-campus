@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus · door hologram mock</title>
+<style>
+  :root {
+    --gold: #d4af37;
+    --cyan: #2fd8c8;
+    --ink: #e8efe6;
+    --dim: #8a9a88;
+    --bg: #0b0d0c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); font-family: Georgia, "Times New Roman", serif; color: var(--ink); }
+  .stage {
+    position: relative; width: 100%; height: 100%;
+    background:
+      radial-gradient(ellipse 70% 80% at 50% 48%, rgba(20,40,36,.35), transparent 60%),
+      linear-gradient(#141a16, #0b0d0c);
+    overflow: hidden;
+  }
+  .frame {
+    position: absolute; inset: 4% 18% 8%;
+    border: 10px solid #3a2a1c;
+    box-shadow:
+      inset 0 0 0 3px #c9962e,
+      0 0 0 14px #24180f,
+      0 40px 80px rgba(0,0,0,.55);
+  }
+  .frame::before, .frame::after {
+    content: ""; position: absolute; width: 18px; height: 18px; background: #c9962e;
+  }
+  .frame::before { top: -14px; left: -14px; }
+  .frame::after { top: -14px; right: -14px; }
+  .knob {
+    position: absolute; right: -8px; top: 48%; width: 16px; height: 16px;
+    border-radius: 50%; background: #c9962e; box-shadow: 0 0 8px #c9962e;
+  }
+  .holo {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(47,216,200,.08), rgba(6,20,16,.72) 40%, rgba(6,12,10,.88)),
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(47,216,200,.07) 28px);
+    overflow: auto;
+    padding: 28px 32px 24px;
+  }
+  .scan {
+    pointer-events: none; position: absolute; left: 0; right: 0; height: 42%;
+    background: linear-gradient(180deg, transparent, rgba(47,216,200,.12), transparent);
+    animation: scan 4.2s linear infinite;
+  }
+  @keyframes scan { from { top: -40%; } to { top: 100%; } }
+  header { position: relative; z-index: 1; margin-bottom: 22px; }
+  header .kicker {
+    font-size: 11px; letter-spacing: .28em; color: var(--cyan); text-transform: uppercase;
+  }
+  header h1 {
+    margin: 4px 0 6px; font-size: 28px; font-weight: 600; letter-spacing: .22em; color: var(--gold);
+  }
+  header p { margin: 0; color: var(--dim); font-size: 14px; }
+  .grid {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  button.pin {
+    appearance: none; text-align: left; cursor: pointer;
+    background: rgba(10,18,16,.72); border: 1px solid rgba(47,216,200,.28);
+    color: inherit; padding: 14px 16px 12px; font: inherit;
+    box-shadow: inset 0 0 24px rgba(47,216,200,.06);
+  }
+  button.pin:hover { border-color: var(--gold); }
+  button.pin.here {
+    border-color: var(--gold);
+    background: rgba(40,32,12,.55);
+  }
+  button.pin .name { display: block; font-size: 16px; letter-spacing: .04em; }
+  button.pin .meta { display: block; margin-top: 4px; font-size: 11px; color: var(--dim); letter-spacing: .04em; }
+  button.pin .pet { display: block; margin-top: 6px; font-size: 11px; color: var(--cyan); }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .dot.live { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .dot.idle { background: #9fb8a4; }
+  .dot.here { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  footer {
+    position: relative; z-index: 1; margin-top: 18px;
+    display: flex; justify-content: space-between; gap: 12px;
+    font-size: 11px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase;
+  }
+  .hint { position: absolute; left: 20px; bottom: 18px; font-size: 11px; color: #6f7f72; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="frame">
+      <span class="knob"></span>
+      <div class="holo">
+        <div class="scan"></div>
+        <header>
+          <div class="kicker">Door · Midas</div>
+          <h1>CAMPUS</h1>
+          <p>Where do you want to go?</p>
+        </header>
+        <div class="grid">
+          <button class="pin" type="button">
+            <span class="name">Home</span>
+            <span class="meta"><span class="dot idle"></span>hub · quiet</span>
+            <span class="pet">pet · house cat</span>
+          </button>
+          <button class="pin" type="button">
+            <span class="name">TSH</span>
+            <span class="meta"><span class="dot live"></span>2 working · 1 idle</span>
+            <span class="pet">pet · slow tortoise</span>
+          </button>
+          <button class="pin" type="button">
+            <span class="name">Folio Work Kits (DPF)</span>
+            <span class="meta"><span class="dot live"></span>1 working · 1 idle</span>
+            <span class="pet">pet · paper crane</span>
+          </button>
+          <button class="pin here" type="button">
+            <span class="name">Midas</span>
+            <span class="meta"><span class="dot here"></span>you are here · 3 live · 1 idle</span>
+            <span class="pet">pet · coin scarab</span>
+          </button>
+          <button class="pin" type="button">
+            <span class="name">WanderPick</span>
+            <span class="meta"><span class="dot idle"></span>all idle</span>
+            <span class="pet">pet · map fox</span>
+          </button>
+          <button class="pin" type="button">
+            <span class="name">Agent Staff</span>
+            <span class="meta"><span class="dot live"></span>1 working</span>
+            <span class="pet">pet · courier moth</span>
+          </button>
+        </div>
+        <footer>
+          <span>Esc · close door</span>
+          <span>Click a pin · light-tunnel warp</span>
+        </footer>
+      </div>
+    </div>
+    <div class="hint">Mock · not wired · standing in the Midas doorway</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Midas room · model bake-off</title>
+  <style>
+    :root {
+      --bg: #0c0b09;
+      --ink: #f3efe6;
+      --muted: #9a917f;
+      --line: #2a261f;
+      --gold: #c4a574;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 13px/1.4 "IBM Plex Sans", "Segoe UI", sans-serif; }
+    header {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      padding: 12px 16px; border-bottom: 1px solid var(--line);
+    }
+    h1 { font-size: 15px; font-weight: 600; margin: 0; letter-spacing: .02em; }
+    header p { margin: 0; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      height: calc(100% - 52px);
+    }
+    figure {
+      margin: 0; display: flex; flex-direction: column; min-width: 0;
+      border-right: 1px solid var(--line);
+    }
+    figure:last-child { border-right: none; }
+    figcaption {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--gold);
+      font-size: 12px;
+    }
+    figcaption a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--gold); }
+    iframe { flex: 1; width: 100%; border: 0; background: #111; }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: 1fr; height: auto; }
+      figure { height: 70vh; border-right: none; border-bottom: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Midas · 3/4 3D room</h1>
+    <p>Same brief · three models · WASD pan, Q/E yaw inside a pane · click Open for full window</p>
+  </header>
+  <div class="grid">
+    <figure>
+      <figcaption><span>openrouter/kimi-k3</span><a href="kimi-k3/midas.html" target="_blank" rel="noopener">Open</a></figcaption>
+      <iframe src="kimi-k3/midas.html" title="Kimi K3 Midas room"></iframe>
+    </figure>
+    <figure>
+      <figcaption><span>openrouter/claude-sonnet-5</span><a href="claude-sonnet-5/midas.html" target="_blank" rel="noopener">Open</a></figcaption>
+      <iframe src="claude-sonnet-5/midas.html" title="Claude Sonnet 5 Midas room"></iframe>
+    </figure>
+    <figure>
+      <figcaption><span>openai/gpt-5.6-sol</span><a href="gpt-5.6-sol/midas.html" target="_blank" rel="noopener">Open</a></figcaption>
+      <iframe src="gpt-5.6-sol/midas.html" title="GPT-5.6 Sol Midas room"></iframe>
+    </figure>
+  </div>
+</body>
+</html>

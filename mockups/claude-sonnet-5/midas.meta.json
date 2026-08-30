@@ -1,0 +1,31 @@
+{
+  "model_requested": "anthropic/claude-sonnet-5",
+  "model_returned": "anthropic/claude-sonnet-5",
+  "label": "openrouter/claude-sonnet-5",
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 873,
+    "completion_tokens": 12068,
+    "total_tokens": 12941,
+    "cost": 0.12120174,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.122426,
+      "upstream_inference_prompt_cost": 0.001746,
+      "upstream_inference_completions_cost": 0.12068
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 651,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "content_chars": 21970,
+  "has_reasoning": true
+}

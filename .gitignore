@@ -1,0 +1,47 @@
+# macOS / editors
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+config.local.yaml
+config.local.yml
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node / frontend builds
+node_modules/
+dist/
+build/
+coverage/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+.cache/
+tmp/
+
+# Raw LLM/API payloads are generated, provider-specific, and may contain prompts
+*.raw.json
+
+# Local render/test artifacts
+artifacts/
+playwright-report/
+test-results/

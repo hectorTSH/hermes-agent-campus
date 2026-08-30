@@ -1,0 +1,30 @@
+# Hermes Agent Campus — locked builder
+# The general-assistant worker uses this runtime for design and implementation; do not delegate room context.
+
+builder:
+  provider: openai-codex
+  model: gpt-5.6-sol-900k
+  label: openai-codex/gpt-5.6-sol-900k
+
+camera:
+  view: elevated-three-quarter
+  look_down_deg: 36          # v1 ~52, v2 ~42, v3 lower
+  strafe_inverted: true      # A/D and left/right
+  fov: 38
+  pointer_lock: false
+
+map:
+  title: Campus              # hologram / chrome — NOT a project name
+  locations:
+    - Home
+    - TSH
+    - Folio Work Kits (DPF)  # DPF pin only
+    - Midas
+    - WanderPick
+    - Agent Staff
+
+agents:
+  look: distinct-alien-per-agent
+  name_tags: required
+  downtime_zone: required
+  role_stations: required    # orchestrator board, builder bench, reviewer desk, …

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TSH · Project Room v1</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#0b0d0c;font-family:Georgia,serif;}
+  canvas#c{display:block;}
+  #hud{position:fixed;top:14px;left:16px;color:#e8d9a8;z-index:10;pointer-events:none;
+       text-shadow:0 1px 3px #000;}
+  #hud h1{margin:0;font-size:20px;letter-spacing:2px;color:#7abb7a;}
+  #hud p{margin:2px 0 0;font-size:11px;color:#9fb8a4;letter-spacing:1px;}
+  #keys{position:fixed;bottom:12px;left:16px;color:#6f7f72;font-size:11px;z-index:10;pointer-events:none;letter-spacing:1px;}
+  #toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);z-index:30;
+         background:rgba(10,14,12,.92);color:#e8d9a8;border:1px solid #6ba86b;padding:8px 14px;
+         font-size:12px;letter-spacing:1px;opacity:0;transition:opacity .25s;pointer-events:none;}
+  #toast.show{opacity:1;}
+  #inspector{
+    position:fixed;top:16px;right:16px;width:340px;z-index:20;display:none;
+    background:rgba(12,16,14,.94);color:#e8efe6;border:1px solid #6ba86b;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);padding:14px 16px 12px;
+  }
+  #inspector.open{display:block;}
+  #inspector h2{margin:0 28px 2px 0;font-size:16px;color:#7abb7a;letter-spacing:1px;}
+  #inspector .status{font-size:11px;letter-spacing:1px;margin-bottom:10px;}
+  #inspector .status.working{color:#2fd8c8;}
+  #inspector .status.idle{color:#9fb8a4;}
+  #inspector dl{margin:0;display:grid;grid-template-columns:88px 1fr;gap:6px 10px;font-size:12px;}
+  #inspector dt{color:#8a9a88;font-weight:normal;}
+  #inspector dd{margin:0;color:#e8efe6;word-break:break-word;}
+  #inspector .hint{margin:12px 0 0;font-size:10px;color:#6f7f72;letter-spacing:.4px;}
+  #insp-close{position:absolute;top:8px;right:10px;background:transparent;border:0;color:#e8d9a8;
+              font-size:18px;cursor:pointer;line-height:1;}
+  #warp{position:fixed;inset:0;z-index:40;display:none;background:#020508;}
+  #warp.active{display:block;}
+  #warp canvas{width:100%;height:100%;display:block;}
+
+
+  #jobs{position:fixed;top:16px;left:16px;width:420px;max-height:70vh;overflow:auto;z-index:22;display:none;
+    background:rgba(12,16,14,.95);color:#e8efe6;border:1px solid #c9962e;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);padding:14px 16px 12px;}
+  #jobs.open{display:block;}
+  #jobs h2{margin:0 28px 4px 0;font-size:16px;color:#7abb7a;letter-spacing:1px;}
+  #jobs .sub{font-size:11px;color:#8a9a88;margin-bottom:10px;}
+  #jobs table{width:100%;border-collapse:collapse;font-size:12px;}
+  #jobs th{text-align:left;color:#8a9a88;font-weight:normal;padding:4px 6px 6px 0;}
+  #jobs td{padding:6px 8px 6px 0;border-top:1px solid rgba(201,150,46,.25);vertical-align:top;}
+  #jobs .on{color:#2fd8c8;} #jobs .off{color:#9fb8a4;}
+  #jobs-close{position:absolute;top:8px;right:10px;background:transparent;border:0;color:#e8d9a8;font-size:18px;cursor:pointer;}
+  #digest{position:fixed;top:16px;right:16px;width:340px;z-index:21;display:none;
+    background:rgba(12,16,14,.94);color:#e8efe6;border:1px solid #2fd8c8;
+    box-shadow:0 12px 40px rgba(0,0,0,.45);padding:14px 16px 12px;}
+  #digest.open{display:block;}
+  #digest h2{margin:0 28px 2px 0;font-size:16px;color:#2fd8c8;letter-spacing:1px;}
+  #digest .status{font-size:11px;letter-spacing:1px;margin-bottom:10px;color:#d4af37;}
+  #digest dl{margin:0;display:grid;grid-template-columns:92px 1fr;gap:6px 10px;font-size:12px;}
+  #digest dt{color:#8a9a88;} #digest dd{margin:0;}
+  #digest-close{position:absolute;top:8px;right:10px;background:transparent;border:0;color:#e8d9a8;font-size:18px;cursor:pointer;}
+  #campus-menu{position:fixed;inset:0;z-index:35;display:none;background:rgba(4,8,8,.55);}
+  #campus-menu.open{display:block;}
+  #campus-menu .frame{position:absolute;inset:6% 16% 10%;border:10px solid #3a2a1c;
+    box-shadow:inset 0 0 0 3px #c9962e,0 0 0 12px #24180f;background:
+      linear-gradient(180deg, rgba(47,216,200,.08), rgba(6,20,16,.85));
+    padding:22px 26px;overflow:auto;color:#e8efe6;font-family:Georgia,serif;}
+  #campus-menu .kicker{font-size:11px;letter-spacing:.28em;color:#2fd8c8;text-transform:uppercase;}
+  #campus-menu h1{margin:4px 0 8px;font-size:26px;letter-spacing:.22em;color:#d4af37;}
+  #campus-menu .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  #campus-menu button.pin{appearance:none;text-align:left;cursor:pointer;font:inherit;color:inherit;
+    background:rgba(10,18,16,.72);border:1px solid rgba(47,216,200,.28);padding:12px 14px;}
+  #campus-menu button.pin.here{border-color:#d4af37;background:rgba(40,32,12,.55);}
+  #campus-menu button.pin:hover{border-color:#d4af37;}
+  #campus-menu .name{display:block;font-size:15px;}
+  #campus-menu .meta{display:block;margin-top:4px;font-size:11px;color:#8a9a88;}
+  #campus-menu .pet{display:block;margin-top:5px;font-size:11px;color:#2fd8c8;}
+  #campus-menu footer{display:flex;justify-content:space-between;margin-top:14px;font-size:11px;letter-spacing:.12em;color:#8a9a88;text-transform:uppercase;}
+  #warp .cap{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+             color:#e8fff8;font:14px/1.4 Georgia;letter-spacing:4px;text-shadow:0 0 18px #2fd8c8;
+             pointer-events:none;text-align:center;}
+</style>
+</head>
+<body>
+<div id="hud"><h1>TSH</h1><p>Time Strong Health · clinic floor</p></div>
+<div id="keys">WASD pan (A/D inverted) · Q/E yaw · scroll zoom · R/F pitch · click tag · click pet · click jobs wall for crons · click door · I idle-all · P couch-pile</div>
+<div id="toast"></div>
+<aside id="inspector" aria-hidden="true">
+  <button id="insp-close" type="button" aria-label="Close">×</button>
+  <h2 id="insp-name">—</h2>
+  <div id="insp-status" class="status">—</div>
+  <dl id="insp-dl"></dl>
+  <p class="hint">Second click to expand run history — later.</p>
+</aside>
+
+
+<aside id="jobs" aria-hidden="true">
+  <button id="jobs-close" type="button" aria-label="Close">×</button>
+  <h2>Jobs wall</h2>
+  <div class="sub">Crons for anyone in this room (team + generic souls) · no PHI</div>
+  <table>
+    <thead><tr><th>job</th><th>owner</th><th>schedule</th><th></th></tr></thead>
+    <tbody id="jobs-body"></tbody>
+  </table>
+</aside>
+<aside id="digest" aria-hidden="true">
+  <button id="digest-close" type="button" aria-label="Close">×</button>
+  <h2>Room digest</h2>
+  <div id="digest-status" class="status">—</div>
+  <dl id="digest-dl"></dl>
+</aside>
+<div id="campus-menu" aria-hidden="true">
+  <div class="frame">
+    <div class="kicker">Door &nbsp;·&nbsp; TSH</div>
+    <h1>CAMPUS</h1>
+    <p style="margin:0 0 8px;color:#8a9a88;">Where do you want to go?</p>
+    <div class="grid">
+      <button class="pin" data-dest="Home" type="button"><span class="name">Home</span><span class="meta">hub · quiet</span><span class="pet">pet · house cat</span></button>
+      <button class="pin here" data-dest="TSH" type="button"><span class="name">TSH</span><span class="meta">you are here · 3 live · 5 idle</span><span class="pet">pet · slow tortoise</span></button>
+      <button class="pin" data-dest="Folio Work Kits (DPF)" type="button"><span class="name">Folio Work Kits (DPF)</span><span class="meta">1 working · 1 idle</span><span class="pet">pet · paper crane</span></button>
+      <button class="pin" data-dest="Midas" type="button"><span class="name">Midas</span><span class="meta">3 live · 1 idle</span><span class="pet">pet · coin scarab</span></button>
+      <button class="pin" data-dest="WanderPick" type="button"><span class="name">WanderPick</span><span class="meta">all idle</span><span class="pet">pet · map fox</span></button>
+      <button class="pin" data-dest="Agent Staff" type="button"><span class="name">Agent Staff</span><span class="meta">1 working</span><span class="pet">pet · courier moth</span></button>
+    </div>
+    <footer><span>Esc · close door</span><span>Click a pin · light-tunnel warp</span></footer>
+  </div>
+</div>
+<div id="warp" aria-hidden="true">
+  <canvas id="warp-c"></canvas>
+  <div class="cap">WARP<br><span style="font-size:11px;letter-spacing:2px;opacity:.7">CAMPUS DOOR · MOCK</span></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x141a16);
+scene.fog = new THREE.Fog(0x141a16, 12, 28);
+
+const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, 0.1, 100);
+let yaw = 0;
+const target = new THREE.Vector3(0, 0.55, 0.4);
+let dist = 12.2;
+let pitch = THREE.MathUtils.degToRad(36);
+const PITCH_MIN = THREE.MathUtils.degToRad(18);  // low / lateral
+const PITCH_MAX = THREE.MathUtils.degToRad(78);  // overhead
+const DIST_MIN = 5.5, DIST_MAX = 20;
+function updateCam(){
+  const h = Math.cos(pitch)*dist, v = Math.sin(pitch)*dist;
+  camera.position.set(target.x + Math.sin(yaw)*h, target.y + v, target.z + Math.cos(yaw)*h);
+  camera.lookAt(target);
+}
+updateCam();
+
+const renderer = new THREE.WebGLRenderer({antialias:true, canvas: Object.assign(document.createElement('canvas'), {id:'c'})});
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const M = {
+  walnut:  new THREE.MeshStandardMaterial({color:0x5a3e2a, roughness:0.75}),   // warm light wood
+  walnutD: new THREE.MeshStandardMaterial({color:0x3e2a18, roughness:0.8}),
+  brass:   new THREE.MeshStandardMaterial({color:0x8aab8a, roughness:0.55, metalness:0.3}),  // sage rail
+  green:   new THREE.MeshStandardMaterial({color:0x2a6a3a, roughness:0.85}),   // mat green
+  leather: new THREE.MeshStandardMaterial({color:0x6a7a64, roughness:0.65}),   // recovery foam (sage)
+  dark:    new THREE.MeshStandardMaterial({color:0x181e1c, roughness:0.5}),
+  paper:   new THREE.MeshStandardMaterial({color:0xf0ead8, roughness:0.9}),    // outcome sheets
+  wall:    new THREE.MeshStandardMaterial({color:0x26322a, roughness:0.95}),   // clinic sage wall
+  screen:  new THREE.MeshStandardMaterial({color:0x0a1410, emissive:0x3dd68c, emissiveIntensity:0.9}),  // outcome data
+  screenA: new THREE.MeshStandardMaterial({color:0x0a1410, emissive:0x88ccaa, emissiveIntensity:0.8}),  // outcome charts
+  chalk:   new THREE.MeshStandardMaterial({color:0x1a2416, roughness:0.9}),    // whiteboard / corkboard
+  foam:    new THREE.MeshStandardMaterial({color:0xc8d8c0, roughness:0.9}),    // exercise mat
+  handrail:new THREE.MeshStandardMaterial({color:0xb8c0b0, roughness:0.3, metalness:0.5}), // parallel bars
+};
+function box(w,h,d,mat,x,y,z,ry=0,parent=scene){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+  m.position.set(x,y,z); m.rotation.y = ry; m.castShadow = m.receiveShadow = true;
+  parent.add(m); return m;
+}
+function cyl(rt,rb,h,mat,x,y,z,seg=16,parent=scene){
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg), mat);
+  m.position.set(x,y,z); m.castShadow = m.receiveShadow = true; parent.add(m); return m;
+}
+function makeChartTex(seed, w=256, h=160, accent='#3dd68c'){
+  const c = document.createElement('canvas'); c.width=w; c.height=h;
+  const g = c.getContext('2d');
+  g.fillStyle='#06140f'; g.fillRect(0,0,w,h);
+  g.strokeStyle='#163828'; g.lineWidth=1;
+  for(let x=0;x<w;x+=24){ g.beginPath(); g.moveTo(x,0); g.lineTo(x,h); g.stroke(); }
+  for(let y=0;y<h;y+=20){ g.beginPath(); g.moveTo(0,y); g.lineTo(w,y); g.stroke(); }
+  let p = h*0.55;
+  const gap = (w-16)/16;
+  for(let i=0;i<16;i++){
+    const n = ((Math.sin(seed*0.7+i*0.63)+1)*0.5);
+    const body = 6+n*22;
+    const up = ((seed*11+i*17)%10)>4;
+    const col = up ? accent : '#e07070';
+    const top = p - (up?body:0);
+    g.fillStyle = col;
+    g.fillRect(10+i*gap, top, gap*0.45, body);
+    g.fillRect(10+i*gap+gap*0.18, top-8-n*6, 2, body+16+n*8);
+    p += (up?-1:1)*(2+n*4);
+    p = Math.max(28, Math.min(h-20, p));
+  }
+  g.fillStyle=accent; g.font='bold 11px monospace'; g.fillText('MIDAS  ·  PAPER', 8, 14);
+  const tex = new THREE.CanvasTexture(c); tex.anisotropy=4; return tex;
+}
+function chartPlane(w,h,x,y,z,ry,seed,parent,accent){
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(w,h),
+    new THREE.MeshBasicMaterial({map: makeChartTex(seed, 256, 160, accent)})
+  );
+  mesh.position.set(x,y,z); mesh.rotation.y = ry; mesh.castShadow=false;
+  parent.add(mesh); return mesh;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TSH CLINIC FLOOR — warm wood, sage, outcome charts, handrails
+// Species: Tortoise-folk (Chelonians) — calm, deliberate healers
+// Stations: (1) orchestrator whiteboard, (2) assessment bench, (3) outcome review
+// Downtime: recovery couch + stretch mat
+// ─────────────────────────────────────────────────────────────────
+
+// Floor: light maple planks (alternating tone)
+const floor = new THREE.Group();
+for(let i=0;i<14;i++) for(let j=0;j<10;j++){
+  const t2 = box(1,0.06,1, (i+j)%2? M.walnut : M.walnutD, i-7, -0.03, j-5, (i+j)%2?0:Math.PI/2, floor);
+  t2.receiveShadow = true; t2.castShadow = false;
+}
+scene.add(floor);
+// exercise mat (green rectangle in assessment zone)
+box(3.0,0.03,2.1, M.foam, 1.8, 0.02, 2.5);
+// second smaller mat
+box(1.8,0.03,1.2, M.foam, -5.0, 0.02, 3.0);
+
+// Walls
+box(14.6,4,0.3, M.wall, 0,2,-5.5);
+box(0.3,4,11.2, M.wall, -7.3,2,0);
+box(0.3,4,11.2, M.wall, 7.3,2,0);
+// wainscoting
+box(14.6,0.9,0.34, M.walnutD, 0,0.45,-5.48);
+box(0.34,0.9,11.2, M.walnutD, -7.28,0.45,0);
+box(0.34,0.9,11.2, M.walnutD, 7.28,0.45,0);
+box(14.6,0.06,0.36, M.handrail, 0,0.93,-5.47);
+
+// ZONE 1 — orchestrator whiteboard / corkboard (jobs wall)
+// The board IS the jobs wall — click it
+const board = new THREE.Group(); scene.add(board);
+box(5.0,2.4,0.12, M.chalk, -3.7, 1.95, -5.28, 0, board);   // whiteboard surface
+box(5.2,0.1,0.16, M.handrail, -3.7, 3.2, -5.28, 0, board);   // rail top
+box(5.2,0.1,0.16, M.handrail, -3.7, 0.7, -5.28, 0, board);   // rail bottom
+// corkboard panels (outcome chart cards + sticky notes)
+const noteColors=[0xd8e8c8,0xf0d880,0xa8d8c8,0xf0d0a8];
+for(let r=0;r<3;r++) for(let c=0;c<4;c++){
+  const w = 0.65+Math.random()*0.35;
+  box(w,0.26,0.03, new THREE.MeshStandardMaterial({color:noteColors[(r+c)%4], roughness:0.9}),
+    -5.5+c*1.2, 2.6-r*0.62, -5.2, 0, board);
+}
+// Board label: "JOBS WALL" using a canvas texture
+const boardLabel = (()=>{
+  const c2 = document.createElement('canvas'); c2.width=512; c2.height=96;
+  const g2 = c2.getContext('2d');
+  g2.fillStyle='rgba(20,36,24,0)';
+  g2.fillRect(0,0,512,96);
+  g2.fillStyle='#7abb7a'; g2.font='bold 32px Georgia'; g2.textAlign='center'; g2.textBaseline='middle';
+  g2.fillText('JOBS WALL', 256, 48);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c2), depthTest:false, transparent:true}));
+  sp.scale.set(2.8,0.52,1); sp.position.set(-3.7, 3.52, -5.15); sp.renderOrder=98;
+  scene.add(sp);
+  return sp;
+})();
+const chalkBit = box(0.1,0.1,0.04, M.paper, -3.7, 2.15, -5.18, 0, board);
+// board desk/ledge
+box(2.0,0.08,0.65, M.walnut, -3.7, 0.85, -4.65, 0, board);
+cyl(0.05,0.05,0.85, M.walnutD, -4.55,0.42,-4.65,8,board);
+cyl(0.05,0.05,0.85, M.walnutD, -2.85,0.42,-4.65,8,board);
+cyl(0.09,0.09,0.22, M.handrail, -4.2, 1.0, -4.65, 10, board);
+board.userData.kind = 'board';
+board.traverse(o=>{ if(o.isMesh){ o.userData.kind='board'; }});
+
+// ZONE 2 — assessment bench + handrails
+const bench = new THREE.Group(); scene.add(bench);
+// treatment table
+box(3.1,0.12,1.2, M.walnut, 3.9, 0.95, -3.85, 0, bench);
+for(const [x,z] of [[2.55,-4.3],[5.25,-4.3],[2.55,-3.4],[5.25,-3.4]]) cyl(0.06,0.06,0.95, M.dark, x,0.47,z,8,bench);
+// tablet screen (outcome input)
+box(0.85,0.6,0.06, M.dark, 3.4, 1.72, -4.3, 0.15, bench);
+const termScreen = box(0.72,0.48,0.02, M.screen, 3.4, 1.72, -4.25, 0.15, bench);
+termScreen.castShadow=false;
+// parallel bar mock (two rails)
+box(3.2,0.04,0.04, M.handrail, 1.9, 1.02, 2.55);
+box(3.2,0.04,0.04, M.handrail, 1.9, 1.02, 3.55);
+cyl(0.04,0.04,1.08, M.dark, 0.4, 0.51, 2.55, 8);
+cyl(0.04,0.04,1.08, M.dark, 3.4, 0.51, 2.55, 8);
+cyl(0.04,0.04,1.08, M.dark, 0.4, 0.51, 3.55, 8);
+cyl(0.04,0.04,1.08, M.dark, 3.4, 0.51, 3.55, 8);
+const spark = new THREE.PointLight(0x88ffaa, 0, 3); spark.position.set(4.7,1.25,-3.7); scene.add(spark);
+// clipboard stack
+for(let i=0;i<5;i++) box(0.38,0.02,0.26, M.paper, 4.95+i*0.01, 0.97+i*0.025, -3.45, 0.15, bench).castShadow=false;
+// arm lamp
+cyl(0.12,0.16,0.06, M.walnut, 2.7, 1.04, -4.15, 12, bench);
+cyl(0.02,0.02,0.6, M.walnutD, 2.7, 1.35, -4.15, 8, bench);
+box(0.22,0.12,0.14, M.handrail, 2.85, 1.66, -4.05, 0.4, bench);
+const spot = new THREE.SpotLight(0xfff8e8, 16, 6, 0.6, 0.5);
+spot.position.set(2.85,1.7,-4.05); spot.target.position.set(3.75,1.0,-3.65);
+spot.castShadow = true; scene.add(spot, spot.target);
+
+// ZONE 3 — outcome review desk (evidence wall)
+const rev = new THREE.Group(); scene.add(rev);
+box(2.4,0.1,1.1, M.walnut, -4.7, 0.9, -0.35, 0.2, rev);
+for(const [x,z] of [[-5.7,-0.8],[-3.7,0.1],[-5.65,0.1],[-3.8,-0.8]]) cyl(0.05,0.05,0.9, M.walnutD, x,0.45,z,8,rev);
+const scrL = box(0.8,0.55,0.06, M.dark, -5.2, 1.52, -0.75, 0.5, rev);
+const scrLF = box(0.68,0.44,0.02, M.screen, -5.18, 1.52, -0.7, 0.5, rev); scrLF.castShadow=false;
+const scrR = box(0.8,0.55,0.06, M.dark, -4.25, 1.52, -0.85, 0.08, rev);
+const scrRF = box(0.68,0.44,0.02, M.screenA, -4.25, 1.52, -0.8, 0.08, rev); scrRF.castShadow=false;
+// outcome chart planes (green tones)
+{
+  const oc = document.createElement('canvas'); oc.width=256; oc.height=160;
+  const g2=oc.getContext('2d'); g2.fillStyle='#06140a'; g2.fillRect(0,0,256,160);
+  g2.strokeStyle='#163a1e'; g2.lineWidth=1;
+  for(let x=0;x<256;x+=24){g2.beginPath();g2.moveTo(x,0);g2.lineTo(x,160);g2.stroke();}
+  for(let y=0;y<160;y+=20){g2.beginPath();g2.moveTo(0,y);g2.lineTo(256,y);g2.stroke();}
+  g2.strokeStyle='#3dd68c'; g2.lineWidth=2; g2.beginPath(); let py2=80;
+  for(let i=0;i<16;i++){ const nx2=10+i*15, ny2=80+Math.sin(i*0.8)*35; if(i===0) g2.moveTo(nx2,ny2); else g2.lineTo(nx2,ny2); py2=ny2; }
+  g2.stroke();
+  g2.fillStyle='#3dd68c'; g2.font='bold 11px monospace'; g2.fillText('6MWT  TREND', 8, 14);
+  const plane1 = new THREE.Mesh(new THREE.PlaneGeometry(0.64,0.40), new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(oc)}));
+  plane1.position.set(-5.16,1.52,-0.68); plane1.rotation.y=0.5; rev.add(plane1);
+}
+for(let i=0;i<5;i++) box(0.48,0.02,0.34, M.paper, -4.55+i*0.01, 0.97+i*0.025, -0.1, 0.15, rev).castShadow=false;
+
+// ZONE 4 — downtime: recovery couch + stretch mat corner
+const lounge = new THREE.Group(); scene.add(lounge);
+// recovery couch (sage foam)
+box(2.4,0.45,0.95, M.leather, 4.75, 0.35, 2.95, 0, lounge);
+box(2.4,0.7,0.25, M.leather, 4.75, 0.85, 3.38, 0, lounge);
+box(0.25,0.65,0.95, M.leather, 3.6, 0.6, 2.95, 0, lounge);
+box(0.25,0.65,0.95, M.leather, 5.9, 0.6, 2.95, 0, lounge);
+// small cushions
+box(0.65,0.18,0.45, M.foam, 4.2, 0.65, 3.15, 0.15, lounge);
+box(0.65,0.18,0.45, M.foam, 5.3, 0.65, 3.15, -0.1, lounge);
+// sideboard (water/supplies cabinet)
+box(1.45,0.9,0.48, M.walnut, 6.35, 0.45, 1.35, 0, lounge);
+box(1.55,0.06,0.52, M.handrail, 6.35, 0.93, 1.35, 0, lounge);
+// water cup + plant pot on sideboard
+cyl(0.06,0.08,0.3, new THREE.MeshStandardMaterial({color:0x8aafca,roughness:0.2,metalness:0.1}), 6.1, 1.1, 1.25, 10, lounge);
+cyl(0.05,0.06,0.26, new THREE.MeshStandardMaterial({color:0x2a7a4a,roughness:0.2}), 6.45, 1.09, 1.45, 10, lounge);
+// floor lamp
+cyl(0.18,0.22,0.05, M.walnut, 3.35, 0.03, 3.55, 14, lounge);
+cyl(0.025,0.025,1.55, M.walnutD, 3.35, 0.85, 3.55, 8, lounge);
+cyl(0.2,0.28,0.32, new THREE.MeshStandardMaterial({color:0xf0e8d0, emissive:0xfff5e0, emissiveIntensity:0.7}), 3.35, 1.7, 3.55, 14, lounge);
+const pl = new THREE.PointLight(0xfffbe8, 9, 6.5); pl.position.set(3.35,1.65,3.55); scene.add(pl);
+
+// Bookshelf / resource cabinet (far left wall)
+box(1.1,1.8,0.4, M.walnut, -6.35, 0.9, 3.15);
+for(let i=0;i<4;i++) box(0.95,0.04,0.32, M.walnutD, -6.35, 0.35+i*0.4, 3.15);
+for(let i=0;i<6;i++) box(0.18,0.28,0.12, new THREE.MeshStandardMaterial({color:[0x3a2a1c,0x2a6a3a,0x5a3a22,0x8aab8a][i%4], roughness:0.8}), -6.7+(i%3)*0.28, 0.55+Math.floor(i/3)*0.42, 3.22);
+// aloe / succulent plant
+cyl(0.16,0.2,0.22, M.walnutD, -5.35, 0.12, 3.35, 10);
+const plant = new THREE.Mesh(new THREE.SphereGeometry(0.32,10,8), new THREE.MeshStandardMaterial({color:0x2e8a3a, roughness:0.8}));
+plant.position.set(-5.35,0.52,3.35); plant.castShadow=true; scene.add(plant);
+
+// Campus door (back wall, center)
+const doorGroup = new THREE.Group(); scene.add(doorGroup);
+doorGroup.userData.kind = 'door';
+const doorLeaf = box(1.25,2.35,0.14, M.walnutD, 0.15, 1.18, -5.35, 0, doorGroup);
+box(1.45,0.1,0.2, M.handrail, 0.15, 2.4, -5.33, 0, doorGroup);
+box(0.1,2.35,0.2, M.handrail, -0.52, 1.18, -5.33, 0, doorGroup);
+box(0.1,2.35,0.2, M.handrail, 0.82, 1.18, -5.33, 0, doorGroup);
+cyl(0.05,0.05,0.05, M.handrail, 0.62, 1.15, -5.25, 10, doorGroup);
+const doorGlow = box(0.95,0.22,0.03, new THREE.MeshStandardMaterial({color:0x0a1418, emissive:0x3dd68c, emissiveIntensity:0.7}), 0.15, 2.62, -5.3, 0, doorGroup);
+doorGlow.castShadow=false;
+doorLeaf.userData.kind = 'door';
+
+// wall charts (outcome posters)
+const ticker = box(5.2,0.28,0.06, new THREE.MeshStandardMaterial({color:0x0a100a, emissive:0x3dd68c, emissiveIntensity:0.7}), -2.2, 3.35, -5.32);
+ticker.castShadow=false;
+for(let i=0;i<3;i++){
+  box(1.15,0.72,0.06, M.dark, 2.2+i*1.22, 2.05, -5.32);
+  // outcome chart mini
+  const oc2 = document.createElement('canvas'); oc2.width=128; oc2.height=80;
+  const g3=oc2.getContext('2d'); g3.fillStyle='#06140a'; g3.fillRect(0,0,128,80);
+  g3.strokeStyle='#163a1e'; g3.lineWidth=1;
+  g3.strokeStyle=i===1?'#e07070':'#3dd68c'; g3.lineWidth=2;
+  g3.beginPath(); let yy=40;
+  for(let k=0;k<8;k++){ const xx=8+k*14; yy=40+Math.sin((i*3.7+k)*1.1)*22; if(k===0)g3.moveTo(xx,yy); else g3.lineTo(xx,yy); }
+  g3.stroke();
+  const pm = new THREE.Mesh(new THREE.PlaneGeometry(1.05,0.62), new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(oc2)}));
+  pm.position.set(2.2+i*1.22, 2.05, -5.28); pm.rotation.y=0; scene.add(pm);
+}
+
+// TSH "slow tortoise" icon on floor (replaces Midas statue)
+// Simple tortoise: shell dome + head + legs
+const tsh_mat = new THREE.MeshStandardMaterial({color:0x5a8a4a, roughness:0.6, metalness:0.1});
+const shell_mat = new THREE.MeshStandardMaterial({color:0x3a5a2a, roughness:0.5});
+// tortoise plinth
+cyl(0.55,0.62,0.18, M.walnutD, 0, 0.1, -1.55, 16);
+cyl(0.42,0.48,0.22, tsh_mat, 0, 0.28, -1.55, 16);
+// shell
+const shell = new THREE.Mesh(new THREE.SphereGeometry(0.38,12,10), shell_mat);
+shell.scale.set(1,0.65,1.2); shell.position.set(0,0.7,-1.55); scene.add(shell);
+// head
+const tHead = new THREE.Mesh(new THREE.SphereGeometry(0.13,10,8), tsh_mat);
+tHead.position.set(0,0.68,-1.95); scene.add(tHead);
+// legs (4)
+for(const [lx,lz] of [[-0.35,-.85],[.35,-.85],[-.35,-1.25],[.35,-1.25]]){
+  const leg=cyl(0.055,0.06,0.22,tsh_mat,lx,0.35,lz+(-1.55),8); leg.rotation.z=lx>0?0.5:-0.5;
+}
+const tPlinthLight = new THREE.PointLight(0xe0ffe0, 5, 5); tPlinthLight.position.set(0,1.4,-1.55); scene.add(tPlinthLight);
+
+// Lighting
+scene.add(new THREE.AmbientLight(0x3a4a3e, 1.0));
+const warm = new THREE.PointLight(0xfff8f0, 22, 16); warm.position.set(0,3.1,0); warm.castShadow=true; scene.add(warm);
+const cool = new THREE.PointLight(0x66ff99, 6, 7); cool.position.set(-4.7,1.7,-0.5); scene.add(cool);
+const cool2 = new THREE.PointLight(0xffe0a0, 6, 7); cool2.position.set(3.5,1.7,-3.8); scene.add(cool2);
+const dir = new THREE.DirectionalLight(0xfff8f0, 0.45); dir.position.set(3,7,5); dir.castShadow=true;
+dir.shadow.camera.left=-8; dir.shadow.camera.right=8; dir.shadow.camera.top=8; dir.shadow.camera.bottom=-8;
+scene.add(dir);
+// canopy plates
+for(const x of [-3.2,0,3.2]){
+  box(0.55,0.06,0.55, new THREE.MeshStandardMaterial({color:0x1a2820, roughness:0.9}), x, 3.88, -0.8).castShadow=false;
+  cyl(0.03,0.03,0.42, M.dark, x, 3.64, -0.8, 6);
+  cyl(0.16,0.24,0.2, new THREE.MeshStandardMaterial({color:0x2a2a2a, emissive:0xfff5e8, emissiveIntensity:0.9}), x, 3.38, -0.8, 12);
+}
+
+function makeTag(text, working){
+  const c = document.createElement('canvas'); c.width=512; c.height=144;
+  const g = c.getContext('2d');
+  g.fillStyle='rgba(10,14,12,0.92)';
+  g.beginPath(); g.roundRect(8,16,496,112,16); g.fill();
+  g.strokeStyle = working ? '#2fd8c8' : '#c9962e'; g.lineWidth=5; g.stroke();
+  g.fillStyle = working ? '#2fd8c8' : '#9fb8a4';
+  g.font='bold 22px Georgia'; g.textAlign='left'; g.textBaseline='middle';
+  g.fillText(working ? '● LIVE' : '○ IDLE', 28, 44);
+  g.fillStyle='#e8f0e0'; g.font='bold 44px Georgia'; g.textAlign='center';
+  g.fillText(text, 256, 96);
+  const tex = new THREE.CanvasTexture(c); tex.anisotropy=4;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:tex, depthTest:false}));
+  sp.scale.set(1.55,0.44,1); sp.renderOrder=99;
+  sp.userData.kind = 'tag';
+  return sp;
+}
+
+// One species for this room: Chelonians (tortoise-folk) — calm, deliberate.
+// Same mesh per role; distinguish with shell pattern, sash, badge, scale.
+function buildChelonian(role){
+  const g = new THREE.Group();
+  const seated = role === 'idle';
+  const scale = role==='orch'?1.06 : role==='build'?1.0 : role==='review'?0.95 : 0.9;
+  g.scale.set(scale,scale,scale);
+  const shellMat = new THREE.MeshStandardMaterial({color:role==='idle'?0x4a7040:0x3a5a2a, roughness:0.55, metalness:0.1});
+  const skinMat  = new THREE.MeshStandardMaterial({color:role==='idle'?0x6a9460:0x5a8a4a, roughness:0.6});
+  const sashC = {orch:0x1e4d33, build:0x2a4d6a, review:0x1a3a5c, idle:0x3a3a28}[role];
+  const sash  = new THREE.MeshStandardMaterial({color:sashC, roughness:0.7});
+
+  // legs
+  cyl(0.12,0.14,0.42, skinMat, -0.09, 0.28, 0, 8, g);
+  cyl(0.12,0.14,0.42, skinMat,  0.09, 0.28, 0, 8, g);
+  if(seated){ g.children[g.children.length-1].rotation.x=1.15; g.children[g.children.length-2].rotation.x=1.15; }
+  // torso
+  cyl(0.16,0.2,0.55, skinMat, 0, seated?0.72:0.78, 0, 10, g);
+  // shell dome (on back)
+  const shellDome = new THREE.Mesh(new THREE.SphereGeometry(0.22,12,10), shellMat);
+  shellDome.scale.set(1,0.7,1.15); shellDome.position.set(0.05, seated?1.0:1.08, -0.06); g.add(shellDome);
+  // sash/badge
+  const sashMesh = box(0.38,0.08,0.22, sash, 0, seated?0.88:0.95, 0.12, 0, g);
+  sashMesh.rotation.z = 0.4;
+  // head (broad flat chelonian head)
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.14,12,10), skinMat);
+  head.scale.set(1.15,0.8,1); head.position.set(0, seated?1.22:1.28, 0.12); head.castShadow=true; g.add(head);
+  // eyes (glowing green)
+  for(const s of [-1,1]){
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.028,8,8),
+      new THREE.MeshStandardMaterial({color:0x111, emissive:0x44dd88, emissiveIntensity:0.8}));
+    eye.position.set(0.055*s, seated?1.27:1.33, 0.24); g.add(eye);
+  }
+  // orchestrator: medical cross patch on shell
+  if(role==='orch'){
+    box(0.06,0.22,0.04, new THREE.MeshStandardMaterial({color:0xcc3333}), 0.05, seated?1.12:1.2, -0.16, 0, g);
+    box(0.22,0.06,0.04, new THREE.MeshStandardMaterial({color:0xcc3333}), 0.05, seated?1.2:1.28, -0.16, 0, g);
+  }
+  // reviewer: reading visor
+  if(role==='review'){
+    box(0.22,0.04,0.12, M.dark, 0, seated?1.27:1.33, 0.22, 0, g);
+  }
+  const workArm = new THREE.Group(); g.add(workArm);
+  workArm.position.set(-0.22, seated?0.95:1.02, 0.04);
+  cyl(0.045,0.04,0.42, skinMat, 0, -0.18, 0, 8, workArm);
+  const hand = new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8), skinMat); hand.position.set(0,-0.4,0); workArm.add(hand);
+  const otherArm = new THREE.Group(); g.add(otherArm);
+  otherArm.position.set(0.22, seated?0.95:1.02, 0.04);
+  cyl(0.045,0.04,0.42, skinMat, 0, -0.18, 0, 8, otherArm);
+  if(role==='orch'){ workArm.rotation.x=-1.2; workArm.rotation.z=-0.25; otherArm.rotation.x=-0.3; }
+  else if(role==='build'){ workArm.rotation.x=-0.9; otherArm.rotation.x=-0.7; }
+  else if(role==='review'){ workArm.rotation.x=-0.6; otherArm.rotation.x=-1.0; otherArm.rotation.z=0.2; }
+  else { workArm.rotation.x=0.4; otherArm.rotation.x=0.5; }
+  g.userData.parts = {workArm, otherArm, head};
+  g.userData.role = role;
+  return g;
+}
+
+const MOCK = {
+  // TSH team
+  tsh: {
+    working: true,
+    model: 'anthropic/claude-sonnet-4.6',
+    tokens: '14.2k in · 4.1k out · $0.11',
+    thinking: 'Reviewing 6MWT trend for morning session cohort.',
+    tool: 'read_file · tsh/outcomes/6mwt-week12.csv',
+    prompt: 'Summarize weekly progression. No client names in output.',
+  },
+  // Generic souls in the TSH room
+  'general-assistant': {
+    working: true,
+    model: 'anthropic/claude-sonnet-4.6',
+    tokens: '9.2k in · 2.8k out · $0.08',
+    thinking: 'Running TSH morning briefing cron.',
+    tool: 'cronjob · tsh-morning-briefing',
+    prompt: 'Daily ops: flag sessions, check calendar, surface action items.',
+  },
+  'digital-director': {
+    working: true,
+    model: 'anthropic/claude-sonnet-4.6',
+    tokens: '11.4k in · 3.5k out · $0.10',
+    thinking: 'Drafting the PD awareness campaign brief.',
+    tool: 'write_file · tsh/campaigns/pd-day-brief.md',
+    prompt: 'TSH digital campaign ops. Follow tsh-campaign-ops skill.',
+  },
+  'customer-researcher': {
+    working: false,
+    model: 'anthropic/claude-sonnet-4.6',
+    lastRun: '3h ago',
+    tokens: '18.0k in · 2.2k out · $0.07',
+    thinking: '(idle) last: caregiver pain-point synthesis complete.',
+    tool: '— none in flight —',
+    prompt: 'TSH voice-of-customer: caregiver pain points and referral sources.',
+  },
+  'risk-reviewer': {
+    working: false,
+    model: 'anthropic/claude-sonnet-4.6',
+    lastRun: '1d ago',
+    tokens: '6.0k in · 1.8k out · $0.04',
+    thinking: '(idle) last: claims review on falls-after-PT campaign.',
+    tool: '— none in flight —',
+    prompt: 'Safety & compliance review for TSH content. Flag yellow flags.',
+  },
+  'video-producer': {
+    working: false,
+    model: 'anthropic/claude-sonnet-4.6',
+    lastRun: '2d ago',
+    tokens: '12.0k in · 4.2k out · $0.09',
+    thinking: '(idle) last: post-production package for caregiver-falls campaign.',
+    tool: '— none in flight —',
+    prompt: 'TSH short-form video post-production. No PHI in output files.',
+  },
+  'systems-engineer': {
+    working: false,
+    model: 'anthropic/claude-sonnet-4.6',
+    lastRun: '8h ago',
+    tokens: '7.1k in · 2.6k out · $0.05',
+    thinking: '(idle) last: MCC Supabase migration script tested.',
+    tool: '— none in flight —',
+    prompt: 'TSH MCC codebase: Next.js / Supabase. Confirm before destructive ops.',
+  },
+};
+const agents = [];
+const clickables = [];
+
+function placeAgent(builder, name, x, z, ry, tagH, y=0){
+  const g = builder();
+  g.position.set(x,y,z); g.rotation.y = ry;
+  g.userData.baseRotY = ry;
+  scene.add(g);
+  const working = MOCK[name].working;
+  const tag = makeTag(name, working);
+  tag.position.set(0, tagH, 0);
+  tag.userData.agentName = name;
+  g.add(tag);
+  clickables.push(tag);
+  agents.push({g, tag, name, working, baseY:y, phase:Math.random()*6, tagH});
+  return g;
+}
+// TSH team at stations (Chelonian species)
+placeAgent(() => buildChelonian('orch'),   'tsh',               -3.7, -3.95, Math.PI,     1.95);
+placeAgent(() => buildChelonian('build'),  'general-assistant',  3.85,-2.85, Math.PI,     1.85);
+placeAgent(() => buildChelonian('review'), 'digital-director',  -4.7,  0.55, Math.PI+0.2, 1.8);
+// generic souls idle / downtime
+placeAgent(() => buildChelonian('idle'),   'customer-researcher', 4.35, 2.95, 0, 1.55, 0.38);
+agents[agents.length-1].idleSpot='couchA'; agents[agents.length-1].idlePose='sit'; agents[agents.length-1].station='couchA';
+placeAgent(() => buildChelonian('idle'),   'risk-reviewer',       5.15, 2.95, 0, 1.55, 0.38);
+agents[agents.length-1].idleSpot='couchB'; agents[agents.length-1].idlePose='sit'; agents[agents.length-1].station='couchB';
+placeAgent(() => buildChelonian('idle'),   'video-producer',     -5.35, 2.55, 0.4, 1.4, 0);
+agents[agents.length-1].idleSpot='stretch'; agents[agents.length-1].idlePose='stretch'; agents[agents.length-1].station='stretch';
+placeAgent(() => buildChelonian('idle'),   'systems-engineer',    5.55,-0.2, Math.PI*0.5, 1.4, 0);
+agents[agents.length-1].idleSpot='vault'; agents[agents.length-1].idlePose='lean'; agents[agents.length-1].station='vault';
+
+clickables.push(doorLeaf);
+board.traverse(o=>{ if(o.isMesh) clickables.push(o); });
+
+const STATIONS = {
+  orch:   {x:-3.7, z:-3.95, ry:Math.PI,     y:0,    role:'orch'},
+  build:  {x:3.85, z:-2.85, ry:Math.PI,     y:0,    role:'build'},
+  review: {x:-4.7, z:0.55,  ry:Math.PI+0.2, y:0,    role:'review'},
+};
+const IDLE_SPOTS = [
+  {id:'couchA',  x:4.35, z:2.95, y:0.38, ry:0, pose:'sit'},
+  {id:'couchB',  x:5.15, z:2.95, y:0.38, ry:0, pose:'sit'},
+  {id:'stretch', x:-5.35, z:2.55, y:0, ry:0.4, pose:'stretch'},
+  {id:'vault',   x:5.55, z:-0.2, y:0, ry:Math.PI*0.5, pose:'lean'},
+  {id:'rug',     x:-1.15, z:-1.55, y:0.02, ry:Math.PI*0.5, pose:'floor'},
+  {id:'sideboard',x:5.95, z:1.45, y:0, ry:Math.PI, pose:'drink'},
+];
+const SOLIDS = [
+  {t:'circ', x:0, z:-1.55, r:0.7},                               // tortoise plinth
+  {t:'aabb', x1:-6.6,x2:-1.1,z1:-5.35,z2:-4.35},                // jobs wall board
+  {t:'aabb', x1:2.3,x2:5.6,z1:-4.55,z2:-3.15},                  // assessment bench
+  {t:'aabb', x1:-6.3,x2:-3.3,z1:-1.15,z2:0.45},                 // outcome review desk
+  {t:'aabb', x1:3.45,x2:6.15,z1:2.35,z2:3.55},                  // recovery couch
+  {t:'aabb', x1:-6.95,x2:-5.75,z1:2.7,z2:3.5},                  // bookshelf
+  {t:'circ', x:-5.35, z:3.35, r:0.38},                           // plant
+  {t:'aabb', x1:0.2,x2:3.6,z1:2.3,z2:3.75},                     // parallel bars
+];
+
+function resolveSolid(x,z,rad){
+  x = THREE.MathUtils.clamp(x, -6.7, 6.7);
+  z = THREE.MathUtils.clamp(z, -4.95, 4.35);
+  for(const s of SOLIDS){
+    if(s.t==='circ'){
+      const dx=x-s.x, dz=z-s.z, d=Math.hypot(dx,dz), min=s.r+rad;
+      if(d<min && d>1e-4){ const k=min/d; x=s.x+dx*k; z=s.z+dz*k; }
+      else if(d<min){ x=s.x+min; }
+    } else {
+      const x1=s.x1-rad, x2=s.x2+rad, z1=s.z1-rad, z2=s.z2+rad;
+      if(x>x1 && x<x2 && z>z1 && z<z2){
+        const l=x-x1, rgt=x2-x, b=z-z1, f=z2-z, m=Math.min(l,rgt,b,f);
+        if(m===l) x=x1; else if(m===rgt) x=x2; else if(m===b) z=z1; else z=z2;
+      }
+    }
+  }
+  return {x,z};
+}
+function claimIdleSpot(){
+  const used = new Set(agents.map(a=>a.idleSpot).filter(Boolean));
+  return IDLE_SPOTS.find(s=>!used.has(s.id)) || null;
+}
+function startWalk(agent, destKeyOrSpot){
+  let d;
+  if(typeof destKeyOrSpot==='string' && STATIONS[destKeyOrSpot]){
+    d = {...STATIONS[destKeyOrSpot], destKey: destKeyOrSpot};
+    agent.idleSpot = null;
+  } else {
+    d = destKeyOrSpot;
+    agent.idleSpot = d.id;
+  }
+  agent.walking = true;
+  const dist = Math.hypot(d.x-agent.g.position.x, d.z-agent.g.position.z);
+  agent.walk = {
+    x1:d.x, z1:d.z, y1:d.y??0, ry1:d.ry, role:d.role||'idle', pose:d.pose,
+    destKey:d.destKey||d.id, u:0, dur: Math.max(1.1, Math.min(2.2, dist/2.4))
+  };
+}
+function goIdle(agent){
+  const spot = claimIdleSpot();
+  if(spot){ startWalk(agent, spot); return spot.id; }
+  // couch pile easter egg
+  const n = agents.filter(a=>a.idleSpot && String(a.idleSpot).startsWith('pile')).length;
+  startWalk(agent, {id:'pile'+n, x:4.75, z:2.95, y:0.38+0.32*n, ry:0, pose:'pile', role:'idle'});
+  return 'pile';
+}
+function stepWalk(agent, dt, t){
+  if(!agent.walking) return;
+  const w = agent.walk;
+  const gx=agent.g.position.x, gz=agent.g.position.z;
+  const dx=w.x1-gx, dz=w.z1-gz, dist=Math.hypot(dx,dz);
+  const step = 2.3*dt;
+  if(dist < 0.12){
+    agent.walking = false;
+    const p = resolveSolid(w.x1, w.z1, 0.28);
+    agent.g.position.set(p.x, w.y1, p.z);
+    agent.g.rotation.y = w.ry1;
+    agent.g.userData.baseRotY = w.ry1;
+    agent.baseY = w.y1;
+    agent.working = w.role !== 'idle';
+    MOCK[agent.name].working = agent.working;
+    agent.station = w.destKey;
+    agent.idlePose = w.pose;
+    return;
+  }
+  let nx = gx + dx/dist*step, nz = gz + dz/dist*step;
+  const p = resolveSolid(nx, nz, 0.28);
+  agent.g.position.x = p.x; agent.g.position.z = p.z;
+  agent.g.position.y = (agent.baseY||0) + Math.sin(t*10)*0.045;
+  agent.g.rotation.y = Math.atan2(dx, dz);
+  const parts = agent.g.userData.parts;
+  parts.workArm.rotation.x = -0.5 + Math.sin(t*10)*0.45;
+  parts.otherArm.rotation.x = -0.5 + Math.sin(t*10+Math.PI)*0.45;
+}
+
+// TSH pet: slow tortoise
+function buildTortoise(){
+  const g = new THREE.Group();
+  const shellMat = new THREE.MeshStandardMaterial({color:0x3a5a2a, roughness:0.55});
+  const skinMat  = new THREE.MeshStandardMaterial({color:0x5a8a4a, roughness:0.65});
+  // body
+  const body = new THREE.Mesh(new THREE.SphereGeometry(0.14,12,10), shellMat);
+  body.scale.set(1.1,0.6,1.3); body.position.y=0.1; body.castShadow=true; g.add(body);
+  // head
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.065,10,8), skinMat);
+  head.position.set(0,0.1,0.2); g.add(head);
+  // tail
+  const tail = new THREE.Mesh(new THREE.ConeGeometry(0.025,0.1,6), skinMat);
+  tail.position.set(0,0.08,-0.18); tail.rotation.x=0.4; g.add(tail);
+  // legs (4)
+  const legs=[];
+  for(let i=0;i<4;i++){
+    const s=(i<2)?-1:1, k=i%2;
+    const leg = cyl(0.018,0.018,0.1, skinMat, 0.1*s, 0.04, -0.06+k*0.12, 5, g);
+    leg.rotation.z=s*0.7; legs.push(leg);
+  }
+  g.userData.parts={legs,body,head};
+  g.userData.kind='pet';
+  return g;
+}
+const tortoise = buildTortoise();
+tortoise.position.set(0.6,0,0.8);
+scene.add(tortoise);
+tortoise.traverse(o=>{ if(o.isMesh){ o.userData.kind='pet'; clickables.push(o); }});
+
+const PET = { mode:'wander', speed:1.6, theta:0, attend:null };
+function petModeAt(t){
+  const c = Math.floor(t/8)%4;
+  return ['wander','attend','door','pipeline'][c];
+}
+function roomBurn(){
+  const live = agents.filter(a=>a.working && !a.walking).length;
+  return { live, idle: agents.length-live, usd: (0.08*live+0.03).toFixed(2) };
+}
+
+function hideDigest(){
+  document.getElementById('digest').classList.remove('open');
+}
+function showDigest(){
+  hideInspector();
+  const b = roomBurn();
+  const mode = PET.mode;
+  const human = mode==='door'
+    ? 'Check voice inbox · 3 messages waiting.'
+    : 'None. Room steady.';
+  const attn = mode==='attend' ? 'parked on digital-director (campaign draft LIVE too long · mock)'
+    : mode==='door' ? 'sitting in doorway — voice inbox needs you'
+    : mode==='pipeline' ? 'walking the board → bench → review path'
+    : 'wandering empty floor';
+  document.getElementById('digest-status').textContent = mode==='door' ? 'NEEDS YOU' : 'ROOM STEADY · mock';
+  document.getElementById('digest-dl').innerHTML = [
+    ['room','TSH'],
+    ['LIVE / idle', b.live+' / '+b.idle],
+    ['room burn','$'+b.usd+' / hr mock'],
+    ['last ok','paper checklist · 4m ago'],
+    ['last fail','—'],
+    ['attention', attn],
+    ['human action', human],
+    ['pet','slow tortoise'],
+  ].map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('');
+  document.getElementById('digest').classList.add('open');
+}
+document.getElementById('digest-close').onclick = hideDigest;
+
+const JOBS = [
+  // TSH profile crons (owner: tsh)
+  {name:'DB backup (Supabase)',         owner:'tsh',               sched:'Sun 5:00 PM', last:'7d ago',  next:'Sun 5pm',  on:true},
+  {name:'Google Voice inbox watch',     owner:'tsh',               sched:'8 AM / 1 PM / 6 PM', last:'~2h ago',next:'~4h', on:true},
+  // general-assistant TSH crons (owner: general-assistant)
+  {name:'TSH morning briefing',         owner:'general-assistant',  sched:'6 AM daily',  last:'paused', next:'—',        on:false},
+  // Midas invoice-watch is tsh profile — shown here because it fires in this room
+  {name:'Session invoice watch',        owner:'tsh',               sched:'Wed 7 PM ET', last:'3d ago',  next:'Wed 7pm',  on:true},
+];
+function hideJobs(){ document.getElementById('jobs').classList.remove('open'); }
+function showJobs(){
+  hideInspector(); hideDigest();
+  document.getElementById('jobs-body').innerHTML = JOBS.map(j=>
+    `<tr><td>${j.name}<div style="color:#8a9a88;font-size:10px">last ${j.last} · next ${j.next}</div></td><td>${j.owner}</td><td>${j.sched}</td><td class="${j.on?'on':'off'}">${j.on?'on':'paused'}</td></tr>`
+  ).join('');
+  document.getElementById('jobs').classList.add('open');
+}
+document.getElementById('jobs-close').onclick = hideJobs;
+
+
+const campusMenu = document.getElementById('campus-menu');
+function openCampus(){ hideInspector(); hideDigest(); campusMenu.classList.add('open'); campusMenu.setAttribute('aria-hidden','false'); }
+function closeCampus(){ campusMenu.classList.remove('open'); campusMenu.setAttribute('aria-hidden','true'); }
+campusMenu.addEventListener('click', e=>{ if(e.target===campusMenu) closeCampus(); });
+campusMenu.querySelectorAll('button.pin').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const dest = btn.dataset.dest;
+    closeCampus();
+    if(dest==='TSH'){ toast('already here · TSH'); return; }
+    startWarp(dest);
+  });
+});
+addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeCampus(); hideDigest(); hideInspector(); hideJobs(); }});
+
+// demo handoff: research finishes → walks to couch; monitor walks to review
+// demo: after 9s digital-director finishes → walks to couch
+setTimeout(()=>{ goIdle(agents[2]); toast('digital-director idle · heading to recovery couch'); }, 9000);
+// after 16s: tsh and general-assistant also go idle (overflow)
+setTimeout(()=>{
+  goIdle(agents[0]); goIdle(agents[1]);
+  toast('TSH room: full idle overflow · stretch / lean / rug');
+}, 16000);
+addEventListener('keydown', e=>{
+  if(e.key==='i'||e.key==='I'){ agents.forEach(a=>{ if(a.working||a.station!=='stretch') goIdle(a); }); toast('all idle · tortoise wanders · overflow poses'); }
+  if(e.key==='p'||e.key==='P'){
+    agents.forEach(a=>{ a.idleSpot=null; startWalk(a, {id:'pile', x:4.75, z:2.95, y:0.38, ry:0, pose:'pile', role:'idle'}); });
+    toast('glitch pile · everyone on the couch');
+  }
+});
+
+
+doorGroup.traverse(o=>{ if(o.isMesh){ o.userData.kind='door'; clickables.push(o); }});
+
+const keys = {};
+addEventListener('keydown', e=>{ keys[e.key.toLowerCase()]=true; if(['arrowleft','arrowright','arrowup','arrowdown'].includes(e.key.toLowerCase())) e.preventDefault(); });
+addEventListener('keyup',   e=>keys[e.key.toLowerCase()]=false);
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+addEventListener('wheel', e=>{
+  e.preventDefault();
+  const k = Math.exp(e.deltaY * 0.0016);
+  dist = THREE.MathUtils.clamp(dist * k, DIST_MIN, DIST_MAX);
+}, {passive:false});
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const inspector = document.getElementById('inspector');
+const inspDl = document.getElementById('insp-dl');
+let openName = null;
+let hovering = false;
+
+function setMouse(e){
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX-r.left)/r.width)*2-1;
+  mouse.y = -((e.clientY-r.top)/r.height)*2+1;
+}
+function pick(e){
+  setMouse(e);
+  raycaster.setFromCamera(mouse, camera);
+  return raycaster.intersectObjects(clickables, true)[0];
+}
+function showInspector(name){
+  const d = MOCK[name];
+  openName = name;
+  document.getElementById('insp-name').textContent = name;
+  const st = document.getElementById('insp-status');
+  st.textContent = d.working ? 'WORKING' : 'IDLE · showing last run';
+  st.className = 'status ' + (d.working ? 'working' : 'idle');
+  const rows = d.working
+    ? [['model', d.model],['token burn', d.tokens],['thinking', d.thinking],['tool', d.tool],['prompt', d.prompt]]
+    : [['model', d.model],['last run', d.lastRun],['token burn', d.tokens],['thinking', d.thinking],['tool', d.tool],['last prompt', d.prompt]];
+  inspDl.innerHTML = rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('');
+  inspector.classList.add('open');
+  inspector.setAttribute('aria-hidden','false');
+}
+function hideInspector(){
+  openName = null;
+  inspector.classList.remove('open');
+  inspector.setAttribute('aria-hidden','true');
+}
+document.getElementById('insp-close').onclick = hideInspector;
+
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2200);
+}
+
+let warping = false;
+function startWarp(dest="Campus"){
+  if(warping) return;
+  warping = true;
+  hideInspector();
+  const overlay = document.getElementById('warp');
+  const cv = document.getElementById('warp-c');
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden','false');
+  const ctx = cv.getContext('2d');
+  const dpr = Math.min(devicePixelRatio,2);
+  function size(){ cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; }
+  size();
+  const streaks = Array.from({length:90}, ()=>({
+    a: Math.random()*Math.PI*2,
+    r: 4+Math.random()*40,
+    v: 8+Math.random()*22,
+    w: 1+Math.random()*2.5,
+  }));
+  const t0 = performance.now();
+  function frame(now){
+    const u = Math.min(1, (now-t0)/1800);
+    const W = cv.width, H = cv.height, cx=W/2, cy=H/2;
+    ctx.fillStyle = `rgba(4,8,12,${0.25+u*0.2})`;
+    ctx.fillRect(0,0,W,H);
+    const grd = ctx.createRadialGradient(cx,cy,10,cx,cy,Math.max(W,H)*0.55);
+    grd.addColorStop(0, `rgba(180,255,240,${0.15+u*0.45})`);
+    grd.addColorStop(0.35, `rgba(47,216,200,${0.12})`);
+    grd.addColorStop(1, 'rgba(2,5,8,0)');
+    ctx.fillStyle = grd; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle = '#e8fff8';
+    streaks.forEach(s=>{
+      s.r += s.v * (1.2+u*3);
+      if(s.r > Math.max(W,H)) s.r = 6;
+      const x0 = cx + Math.cos(s.a)*s.r;
+      const y0 = cy + Math.sin(s.a)*s.r;
+      const x1 = cx + Math.cos(s.a)*(s.r + 28+u*80);
+      const y1 = cy + Math.sin(s.a)*(s.r + 28+u*80);
+      ctx.globalAlpha = 0.35+u*0.55;
+      ctx.lineWidth = s.w * dpr;
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    if(u<1) requestAnimationFrame(frame);
+    else {
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden','true');
+      warping = false;
+      toast('warped to '+(dest||'Campus')+' · mock');
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+renderer.domElement.addEventListener('mousemove', e=>{
+  if(warping){ renderer.domElement.style.cursor='default'; return; }
+  const hit = pick(e);
+  const kind = hit && (hit.object.userData.kind || (hit.object.parent && hit.object.parent.userData.kind));
+  hovering = !!(kind==='tag' || kind==='door' || kind==='pet' || kind==='board');
+  renderer.domElement.style.cursor = hovering ? 'pointer' : 'default';
+});
+renderer.domElement.addEventListener('click', e=>{
+  if(warping || campusMenu.classList.contains('open')) return;
+  const hit = pick(e);
+  if(!hit){ hideInspector(); hideDigest(); hideJobs(); return; }
+  let obj = hit.object;
+  let kind = obj.userData.kind;
+  let cur = obj;
+  while(!kind && cur.parent){ cur = cur.parent; kind = cur.userData.kind; }
+  if(kind==='door'){ openCampus(); return; }
+  if(kind==='board'){ showJobs(); return; }
+  if(kind==='pet'){ showDigest(); return; }
+  if(kind==='tag'){
+    const name = obj.userData.agentName || cur.userData.agentName;
+    hideDigest();
+    if(openName===name) hideInspector();
+    else showInspector(name);
+  }
+});
+
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  const sp = 5*dt;
+  const f = new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+  const r = new THREE.Vector3(f.z,0,-f.x);
+  if(!warping){
+    if(keys['w']||keys['arrowup'])    target.addScaledVector(f, sp);
+    if(keys['s']||keys['arrowdown'])  target.addScaledVector(f,-sp);
+    // inverted A/D and left/right
+    if(keys['a']||keys['arrowleft'])  target.addScaledVector(r, sp);
+    if(keys['d']||keys['arrowright']) target.addScaledVector(r,-sp);
+    if(keys['q']) yaw += 1.2*dt;
+    if(keys['e']) yaw -= 1.2*dt;
+    if(keys['r']||keys['pageup'])   pitch = Math.min(PITCH_MAX, pitch + 1.1*dt);
+    if(keys['f']||keys['pagedown']) pitch = Math.max(PITCH_MIN, pitch - 1.1*dt);
+    if(keys['=']||keys['+']) dist = Math.max(DIST_MIN, dist - 8*dt);
+    if(keys['-']||keys['_']) dist = Math.min(DIST_MAX, dist + 8*dt);
+    target.x = THREE.MathUtils.clamp(target.x,-4.2,4.2);
+    target.z = THREE.MathUtils.clamp(target.z,-3.2,3.2);
+    updateCam();
+  }
+
+  agents.forEach(a=> stepWalk(a, dt, t));
+
+    const tsh_orch = agents[0], gen_asst = agents[1], dig_dir = agents[2];
+  // tsh: writing on the board
+  if(!tsh_orch.walking){
+    const p0 = tsh_orch.g.userData.parts;
+    p0.workArm.rotation.x = -1.15 + Math.sin(t*9)*0.28;
+    p0.workArm.rotation.z = -0.2 + Math.sin(t*4.5)*0.1;
+    p0.head.rotation.y = Math.sin(t*2.2)*0.12;
+    chalkBit.position.x = -3.7 + Math.sin(t*9)*0.55;
+    chalkBit.position.y = 2.15 + Math.cos(t*7)*0.28;
+    tsh_orch.g.rotation.y = tsh_orch.g.userData.baseRotY + Math.sin(t*1.4)*0.04;
+  }
+  // general-assistant: typing at assessment bench
+  if(!gen_asst.walking){
+    const p1 = gen_asst.g.userData.parts;
+    p1.workArm.rotation.x = -0.85 + Math.sin(t*10)*0.35;
+    p1.otherArm.rotation.x = -0.65 + Math.sin(t*8+1)*0.25;
+    spark.intensity = 4 + Math.abs(Math.sin(t*14))*10;
+    termScreen.material.emissiveIntensity = 0.55 + Math.abs(Math.sin(t*6))*0.5;
+  }
+  // digital-director: reviewing outcome screens
+  if(!dig_dir.walking){
+    const p2 = dig_dir.g.userData.parts;
+    if(dig_dir.working){
+      p2.head.rotation.y = Math.sin(t*2.6)*0.22;
+      p2.otherArm.rotation.x = -0.95 + Math.sin(t*5)*0.25;
+    } else {
+      p2.head.rotation.x = 0.12 + Math.sin(t*1.1)*0.04;
+    }
+    scrLF.material.emissiveIntensity = 0.7 + Math.abs(Math.sin(t*5.5))*0.5;
+    scrRF.material.emissiveIntensity = 0.7 + Math.abs(Math.sin(t*4.1+1))*0.5;
+    dig_dir.g.rotation.y = dig_dir.g.userData.baseRotY + Math.sin(t*0.8)*0.04;
+  }
+agents.forEach(a=>{
+    if(a.walking || a.working) return;
+    const p = a.g.userData.parts;
+    if(a.idlePose==='stretch'){
+      p.workArm.rotation.x = -2.2 + Math.sin(t*2)*0.15;
+      p.otherArm.rotation.x = -2.0;
+      a.g.position.y = (a.baseY||0) + 0.04+Math.sin(t*2)*0.03;
+    } else if(a.idlePose==='lean'){
+      a.g.rotation.z = 0.12;
+      p.head.rotation.x = 0.2;
+    } else if(a.idlePose==='floor'){
+      p.workArm.rotation.x = 0.6; p.otherArm.rotation.x = 0.6;
+    } else if(a.idlePose==='pile'){
+      a.g.rotation.z = Math.sin(t*3+a.phase)*0.2;
+    }
+  });
+  // idle agents: gentle head/body micro-moves
+  agents.slice(3).forEach((a)=>{
+    if(a.walking) return;
+    const p = a.g.userData.parts;
+    if(!a.working){
+      p.head.rotation.x = 0.1 + Math.sin(t*1.1+a.phase)*0.05;
+      a.g.position.y = (a.baseY||0) + Math.sin(t*1.0+a.phase)*0.008;
+    }
+  });
+
+    // slow tortoise pet
+  PET.mode = petModeAt(t);
+  const burn = roomBurn();
+  PET.speed = 0.3 + burn.live * 0.4;  // tortoise is always slow
+  const legs = tortoise.userData.parts.legs;
+  let px=tortoise.position.x, pz=tortoise.position.z, py=0.02, face=tortoise.rotation.y;
+  if(!PET.vx){ PET.vx=0.6; PET.vz=0.4; }
+  if(PET.mode==='wander'){
+    px += PET.vx * PET.speed * dt;
+    pz += PET.vz * PET.speed * dt;
+    const hit = resolveSolid(px,pz,0.18);
+    if(Math.abs(hit.x-px)>0.001) PET.vx *= -1;
+    if(Math.abs(hit.z-pz)>0.001) PET.vz *= -1;
+    px=hit.x; pz=hit.z;
+    face = Math.atan2(PET.vx, PET.vz);
+    legs.forEach((lg,i)=>{ lg.rotation.x = Math.sin(t*PET.speed*4+i)*0.4; });
+  } else if(PET.mode==='attend'){
+    const tgt = agents[2].g.position;  // near digital-director
+    px += (tgt.x+0.6 - px)*Math.min(1,dt*1.5);
+    pz += (tgt.z+0.5 - pz)*Math.min(1,dt*1.5);
+    const hit=resolveSolid(px,pz,0.18); px=hit.x; pz=hit.z;
+    face = Math.atan2(tgt.x-px, tgt.z-pz);
+  } else if(PET.mode==='door'){
+    px += (0.15 - px)*Math.min(1,dt*1.4);
+    pz += (-4.55 - pz)*Math.min(1,dt*1.4);
+    const hit=resolveSolid(px,pz,0.18); px=hit.x; pz=hit.z;
+    face = Math.PI;
+  } else {
+    const path=[[-2.4,-3.2],[2.4,-2.0],[-3.2,0.9]];
+    const u=(t%9)/3; const i=Math.min(2,Math.floor(u)); const f2=u-i;
+    const a=path[i], b=path[(i+1)%3];
+    px=a[0]+(b[0]-a[0])*f2; pz=a[1]+(b[1]-a[1])*f2;
+    const hit=resolveSolid(px,pz,0.18); px=hit.x; pz=hit.z;
+    face=Math.atan2(b[0]-a[0], b[1]-a[1]);
+    legs.forEach((lg,i2)=>{ lg.rotation.x = Math.sin(t*4+i2)*0.4; });
+  }
+  tortoise.position.x=px; tortoise.position.z=pz; tortoise.position.y=py+Math.sin(t*3)*0.006;
+  tortoise.rotation.y=face;
+  // head gentle bob
+  tortoise.userData.parts.head.rotation.x = Math.sin(t*1.8)*0.06;
+
+ticker.material.emissiveIntensity = 0.5 + Math.abs(Math.sin(t*3))*0.4;
+  doorGlow.material.emissiveIntensity = hovering ? 1.2 : 0.7;
+
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>
