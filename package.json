@@ -9,6 +9,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
+    "serve:network": "vite preview --host 0.0.0.0 --port ${CAMPUS_PORT:-4173} --strictPort",
+    "start:network": "npm run build && npm run serve:network",
     "generate": "node scripts/campus.mjs generate",
     "validate": "node scripts/campus.mjs validate-all",
     "test": "node --test tests/*.test.mjs",

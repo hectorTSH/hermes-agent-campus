@@ -176,6 +176,13 @@ npm run check      # complete release-candidate gate
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before changing schemas, runtime behavior, or rooms.
 
+## MacBook Air and Mac mini
+
+- [MacBook Air setup and trusted-network access](MACBOOK_AIR_SETUP.md)
+- [Safe Mac mini Hermes-agent wiring boundary](MAC_MINI_AGENT_WIRING.md)
+
+Campus can run locally on the Air or remain on the Mac mini and be controlled from the Air over a trusted LAN or Tailscale. v1 agent controls are visual demonstrations; the wiring guide distinguishes current sanitized RoomSpec data from a future live read-only adapter.
+
 ## Historical prototypes
 
 Files under `mockups/` are archived visual/interaction experiments. They are not loaded by v1. TSH and Midas now run from `rooms/*.json` through the same shared renderer as every other room.
