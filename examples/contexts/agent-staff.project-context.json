@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "id": "agent-staff",
+  "display_name": "Agent Staff",
+  "summary": "A civic briefing loft for coordinating an agent staff that supports small-business outreach; this fixture is local and does not contact any bot.",
+  "allowed_sources": [
+    "README.md",
+    "notes/design-lock.md",
+    "notes/projects.md",
+    "notes/agent-staff-room.md"
+  ],
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "bot-tokens/",
+      "outreach/private/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "raw-model-payloads"
+    ]
+  },
+  "visual_identity": {
+    "keywords": [
+      "graphite",
+      "civic",
+      "briefing-loft",
+      "dispatch"
+    ],
+    "colors": [
+      "#cbd8da",
+      "#3e494b",
+      "#272f31",
+      "#d8c69b",
+      "#b7834d",
+      "#6f8f91"
+    ],
+    "materials": [
+      "charcoal carpet",
+      "graphite mineral plaster",
+      "warm paper"
+    ],
+    "architecture_hint": "civic briefing loft with a Campus-view window",
+    "lighting_hint": "cool suspended civic task lights with warm paper bounce",
+    "openings_hint": "one framed window looking out at Campus",
+    "hero_feature": "situation table and named dispatch slots",
+    "pet": "courier moth"
+  },
+  "agents": [
+    {
+      "handle": "chief-of-staff",
+      "role": "orchestrator",
+      "team_member": true
+    },
+    {
+      "handle": "outreach-bot",
+      "role": "dispatch operator",
+      "team_member": true
+    }
+  ],
+  "jobs": [
+    {
+      "name": "agent-staff-daily-brief",
+      "owner": "chief-of-staff",
+      "schedule": "Weekdays 08:30 local",
+      "enabled": false
+    }
+  ]
+}

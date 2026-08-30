@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0.0",
+  "id": "agent-staff",
+  "display_name": "Agent Staff",
+  "seed": 683094112,
+  "identity_summary": "A graphite civic briefing loft with situation table, dispatch rail, named slots, sign-off desk, and a window looking out at Campus.",
+  "visual_keywords": [
+    "graphite",
+    "civic",
+    "briefing-loft",
+    "dispatch"
+  ],
+  "palette": {
+    "background": "#9eb4b8",
+    "wall": "#4b5658",
+    "wall_secondary": "#333d3f",
+    "floor": "#272e30",
+    "trim": "#202729",
+    "accent": "#b98347",
+    "accent_secondary": "#6e9294",
+    "cream": "#f4e7c5",
+    "dark": "#172022"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 24,
+      "depth": 18
+    },
+    "wall_height": 7.0,
+    "wall_thickness": 0.5,
+    "floor_material": "dense charcoal civic carpet",
+    "wall_material": "graphite mineral plaster",
+    "trim_style": "blackened steel caps with warm-paper insets",
+    "floor_pattern": "carpet",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": 5.4,
+        "width": 6.8,
+        "height": 3.8,
+        "sill": 1.15,
+        "treatment": "campus-view civic window with stylized building skyline"
+      }
+    ],
+    "composition": "civic-briefing-loft",
+    "cutaway": "front-open"
+  },
+  "lighting": {
+    "recipe": "cool civic overhead grid, blue-gray window fill, restrained warm paper bounce",
+    "environment": "#aebfc2",
+    "key": "#d7edf0",
+    "fill": "#768e93",
+    "key_intensity": 1.35,
+    "fill_intensity": 1.55,
+    "exposure": 1.02,
+    "shadow_softness": 7
+  },
+  "species": {
+    "name": "Civic Moths",
+    "silhouette": "civic-moths",
+    "material": "matte graphite ceramic with paper-gold wing panels",
+    "accent_feature": "broad dispatch wings and civic sash"
+  },
+  "agents": [
+    {
+      "handle": "chief-of-staff",
+      "role": "Chief of Staff orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Coordinating the local demo dispatch",
+      "last_work": "Reviewed the sanitized briefing queue",
+      "scale": 1.04,
+      "variant": 0
+    },
+    {
+      "handle": "outreach-bot",
+      "role": "Outreach dispatch operator",
+      "station": "builder",
+      "state": "idle",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": null,
+      "last_work": "Reviewed the sanitized briefing queue",
+      "scale": 0.95,
+      "variant": 1
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "CoS briefing board",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -6.9,
+        0,
+        -2.1
+      ],
+      "rotation": 0.28,
+      "color": "#b98347",
+      "obstacle_radius": 1.4
+    },
+    {
+      "id": "builder",
+      "label": "Dispatch rail",
+      "role_type": "builder",
+      "kind": "dispatch-rail",
+      "position": [
+        0.2,
+        0,
+        -2.4
+      ],
+      "rotation": 0,
+      "color": "#6e9294",
+      "obstacle_radius": 1.6
+    },
+    {
+      "id": "reviewer",
+      "label": "Review and sign-off",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        7.1,
+        0,
+        2.7
+      ],
+      "rotation": -0.45,
+      "color": "#b98347",
+      "obstacle_radius": 1.4
+    }
+  ],
+  "downtime_zone": {
+    "name": "Campus-view window bench",
+    "kind": "window-bench",
+    "position": [
+      6.5,
+      0,
+      -5.9
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Relay",
+    "species": "courier-moth",
+    "default_state": "pipeline",
+    "color": "#d7c38e",
+    "digest": {
+      "room_burn": "light",
+      "last_success": "Local briefing mock reviewed",
+      "last_failure": null,
+      "human_action": "Review the next outreach brief before any external action."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "dispatch-rail",
+    "surface": "dispatch-rail",
+    "accent": "#b98347",
+    "face": "#f4e7c5",
+    "position": [
+      -11.62,
+      3.15,
+      -4.1
+    ],
+    "job_scope": [
+      "agent-staff",
+      "chief-of-staff",
+      "outreach-bot"
+    ],
+    "jobs": [
+      {
+        "name": "agent-staff-daily-brief",
+        "owner": "chief-of-staff",
+        "schedule": "Weekdays 08:30 local",
+        "last_run": "demo adapter \u00b7 not connected",
+        "next_run": "demo adapter \u00b7 paused",
+        "enabled": false
+      }
+    ]
+  },
+  "props": {
+    "hero": "Long situation table beneath named dispatch slots",
+    "clusters": [
+      {
+        "type": "situation-table",
+        "position": [
+          0,
+          0,
+          2.1
+        ],
+        "rotation": 0,
+        "color": "#3a4648"
+      },
+      {
+        "type": "named-slots",
+        "position": [
+          -7.7,
+          0,
+          -8.45
+        ],
+        "rotation": 0,
+        "color": "#272f31"
+      },
+      {
+        "type": "coffee-cart",
+        "position": [
+          9.1,
+          0,
+          -3.6
+        ],
+        "rotation": -0.2,
+        "color": "#b98347"
+      },
+      {
+        "type": "review-stamp",
+        "position": [
+          7.3,
+          0,
+          4.7
+        ],
+        "rotation": -0.35,
+        "color": "#3a4648"
+      },
+      {
+        "type": "staff-sign",
+        "position": [
+          -2.8,
+          5.25,
+          -8.55
+        ],
+        "rotation": 0,
+        "color": "#202729"
+      }
+    ],
+    "accents": [
+      "briefing folios",
+      "named civic slots",
+      "dispatch tickets",
+      "sign-off stamp",
+      "coffee urn",
+      "window-bench cushions",
+      "cool overhead rails"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -11.62,
+      2.33,
+      5.1
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "bot-tokens/",
+      "outreach/private/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "client-data",
+      "personal-paths",
+      "raw-model-payloads"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "agent-staff.project-context.json": "75174890133e69f5ad5cdae5004af1536a478735e81bdbe2a35c28c2cfa8029c"
+    },
+    "model_provider": "openai-codex",
+    "model_name": "gpt-5.6-sol-900k",
+    "llm_used": true
+  }
+}
