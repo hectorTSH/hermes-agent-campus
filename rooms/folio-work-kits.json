@@ -3,7 +3,7 @@
   "id": "folio-work-kits",
   "display_name": "Folio Work Kits (DPF)",
   "seed": 152037891,
-  "identity_summary": "Folio Work Kits: a paper-white and kraft print studio where practical founder tools are printed, packed, reviewed, and shipped.",
+  "identity_summary": "The public brand is Folio Work Kits: a paper-white and kraft print studio where practical founder tools are printed, packed, reviewed, and shipped.",
   "visual_keywords": [
     "paper-white",
     "kraft",
@@ -322,7 +322,7 @@
   "build_metadata": {
     "generator_version": "1.0.0",
     "source_hashes": {
-      "folio-work-kits.project-context.json": "659c46b86304b3f570c546e17741b389d1eb09b3f1a134cb0a4b4fa59cff711c"
+      "examples/contexts/folio-work-kits.project-context.json": "659c46b86304b3f570c546e17741b389d1eb09b3f1a134cb0a4b4fa59cff711c"
     },
     "model_provider": "openai-codex",
     "model_name": "gpt-5.6-sol-900k",

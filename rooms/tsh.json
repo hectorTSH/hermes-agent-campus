@@ -452,7 +452,7 @@
   "build_metadata": {
     "generator_version": "1.0.0",
     "source_hashes": {
-      "tsh.project-context.json": "69293bf808bef867963c4684b5645ed17695eeee953c93bdf42efb57f6b6b4b6"
+      "examples/contexts/tsh.project-context.json": "69293bf808bef867963c4684b5645ed17695eeee953c93bdf42efb57f6b6b4b6"
     },
     "model_provider": "openai-codex",
     "model_name": "gpt-5.6-sol-900k",

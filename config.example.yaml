@@ -1,0 +1,32 @@
+# Copy to config.local.yaml if you add a local adapter.
+# The renderer and built-in deterministic generator need no credentials.
+
+camera:
+  view: elevated-three-quarter
+  look_down_deg: 36
+  strafe_inverted: true
+  fov: 38
+  pointer_lock: false
+
+map:
+  title: Campus
+  locations:
+    - Home
+    - TSH
+    - Folio Work Kits (DPF)
+    - Midas
+    - WanderPick
+    - Agent Staff
+
+agents:
+  species_strategy: one-species-per-room
+  name_tags: required
+  downtime_zone: required
+  role_stations: required
+
+adapters:
+  presence: mock
+  usage: mock
+  cron: roomspec
+  # Optional future provider credentials must be supplied by environment.
+  # Never put tokens or keys in this file.

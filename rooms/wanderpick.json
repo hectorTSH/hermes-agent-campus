@@ -312,7 +312,7 @@
   "build_metadata": {
     "generator_version": "1.0.0",
     "source_hashes": {
-      "wanderpick.project-context.json": "9391bfeac5601add37d976f700b68e1b102b6ba8a31712025b1692d83526cd00"
+      "examples/contexts/wanderpick.project-context.json": "9391bfeac5601add37d976f700b68e1b102b6ba8a31712025b1692d83526cd00"
     },
     "model_provider": "openai-codex",
     "model_name": "gpt-5.6-sol-900k",

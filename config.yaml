@@ -24,7 +24,7 @@ map:
     - Agent Staff
 
 agents:
-  look: distinct-alien-per-agent
+  look: one-species-per-room
   name_tags: required
   downtime_zone: required
   role_stations: required    # orchestrator board, builder bench, reviewer desk, …

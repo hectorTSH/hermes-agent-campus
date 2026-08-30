@@ -366,7 +366,7 @@
   "build_metadata": {
     "generator_version": "1.0.0",
     "source_hashes": {
-      "midas.project-context.json": "8b8083bceb23e38b84c35a0532da72e0f5baaaa5526b84f939f67bec3e6709c5"
+      "examples/contexts/midas.project-context.json": "8b8083bceb23e38b84c35a0532da72e0f5baaaa5526b84f939f67bec3e6709c5"
     },
     "model_provider": "openai-codex",
     "model_name": "gpt-5.6-sol-900k",
