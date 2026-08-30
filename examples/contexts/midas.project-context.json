@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "id": "midas",
+  "display_name": "Midas",
+  "summary": "A paper-only trading, risk, and research war room. It contains no credentials, wallet material, or live execution claims.",
+  "allowed_sources": [
+    "README.md",
+    "notes/design-lock.md",
+    "notes/projects.md"
+  ],
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "wallets/",
+      "broker-credentials/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "wallet-material",
+      "personal-paths",
+      "raw-model-payloads"
+    ]
+  },
+  "visual_identity": {
+    "keywords": [
+      "walnut",
+      "brass",
+      "war-room",
+      "paper-only"
+    ],
+    "colors": [
+      "#17231f",
+      "#293b32",
+      "#4c2f24",
+      "#b78a43",
+      "#d8c28f",
+      "#7c9b82"
+    ],
+    "materials": [
+      "walnut parquet",
+      "dark mineral plaster",
+      "aged brass"
+    ],
+    "architecture_hint": "closed windowless trading and risk room",
+    "lighting_hint": "warm brass pendants with no sky light",
+    "openings_hint": "none; closed war room",
+    "hero_feature": "paper market wall, research bank, and risk dials",
+    "pet": "coin scarab"
+  },
+  "agents": [
+    {
+      "handle": "midas",
+      "role": "fund orchestrator",
+      "team_member": true
+    },
+    {
+      "handle": "midas-cio",
+      "role": "portfolio research",
+      "team_member": true
+    },
+    {
+      "handle": "midas-research",
+      "role": "research reviewer",
+      "team_member": true
+    },
+    {
+      "handle": "midas-options",
+      "role": "options specialist",
+      "team_member": true
+    },
+    {
+      "handle": "midas-risk",
+      "role": "risk specialist",
+      "team_member": true
+    }
+  ],
+  "jobs": [
+    {
+      "name": "midas-paper-market-brief",
+      "owner": "midas",
+      "schedule": "market mornings",
+      "enabled": true
+    },
+    {
+      "name": "midas-paper-risk-check",
+      "owner": "midas-risk",
+      "schedule": "market afternoons",
+      "enabled": true
+    }
+  ]
+}

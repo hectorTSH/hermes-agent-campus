@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0.0",
+  "id": "tsh",
+  "display_name": "TSH",
+  "summary": "A calm clinic and fitness room for older-adult movement support, assessment, outcome review, and recovery, represented without private health or client data.",
+  "allowed_sources": [
+    "README.md",
+    "notes/design-lock.md",
+    "notes/projects.md",
+    "notes/tsh-room.md"
+  ],
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "client-notes/",
+      "health-records/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "phi",
+      "client-data",
+      "personal-paths"
+    ]
+  },
+  "visual_identity": {
+    "keywords": [
+      "cream",
+      "sage",
+      "clinic",
+      "movement"
+    ],
+    "colors": [
+      "#dce8df",
+      "#eee8d8",
+      "#b8d2b7",
+      "#d6b98a",
+      "#63846f",
+      "#bc765e"
+    ],
+    "materials": [
+      "pale maple",
+      "cream mineral plaster",
+      "sage painted steel"
+    ],
+    "architecture_hint": "daylit clinic gallery with three windows",
+    "lighting_hint": "soft clinic daylight and suspended task bars",
+    "openings_hint": "three recessed clinic windows",
+    "hero_feature": "parallel bars, rehab stairs, and outcome review",
+    "pet": "slow tortoise"
+  },
+  "agents": [
+    {
+      "handle": "tsh",
+      "role": "TSH orchestrator",
+      "team_member": true
+    },
+    {
+      "handle": "general-assistant",
+      "role": "assessment support",
+      "team_member": false
+    },
+    {
+      "handle": "digital-director",
+      "role": "outcome review",
+      "team_member": false
+    },
+    {
+      "handle": "customer-researcher",
+      "role": "shared research soul",
+      "team_member": false
+    },
+    {
+      "handle": "risk-reviewer",
+      "role": "shared review soul",
+      "team_member": false
+    },
+    {
+      "handle": "video-producer",
+      "role": "shared education soul",
+      "team_member": false
+    },
+    {
+      "handle": "systems-engineer",
+      "role": "shared systems soul",
+      "team_member": false
+    }
+  ],
+  "jobs": [
+    {
+      "name": "tsh-supabase-backup",
+      "owner": "tsh",
+      "schedule": "daily",
+      "enabled": true
+    },
+    {
+      "name": "tsh-google-voice-inbox-watch",
+      "owner": "tsh",
+      "schedule": "every 15 minutes",
+      "enabled": true
+    },
+    {
+      "name": "tsh-session-invoice-watch",
+      "owner": "tsh",
+      "schedule": "hourly",
+      "enabled": true
+    },
+    {
+      "name": "tsh-morning-briefing",
+      "owner": "general-assistant",
+      "schedule": "weekday mornings",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,461 @@
+{
+  "schema_version": "1.0.0",
+  "id": "tsh",
+  "display_name": "TSH",
+  "seed": 917306284,
+  "identity_summary": "A cream-and-sage clinic gallery for movement practice, generic assessment, outcome review, and recovery \u2014 with absolutely no private health or client data.",
+  "visual_keywords": [
+    "cream",
+    "sage",
+    "clinic",
+    "movement"
+  ],
+  "palette": {
+    "background": "#cfdfd5",
+    "wall": "#eee9dc",
+    "wall_secondary": "#d8e3d6",
+    "floor": "#d8bc8d",
+    "trim": "#66836f",
+    "accent": "#6e927a",
+    "accent_secondary": "#bc765e",
+    "cream": "#fff8e7",
+    "dark": "#32484a"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 26,
+      "depth": 19
+    },
+    "wall_height": 6.8,
+    "wall_thickness": 0.46,
+    "floor_material": "pale maple clinic boards",
+    "wall_material": "cream plaster with sage millwork",
+    "trim_style": "sage capped rails and maple thresholds",
+    "floor_pattern": "maple-planks",
+    "openings": [
+      {
+        "type": "window",
+        "wall": "back",
+        "position": -7.2,
+        "width": 3.5,
+        "height": 3.4,
+        "sill": 1.25,
+        "treatment": "recessed clinic daylight window"
+      },
+      {
+        "type": "window",
+        "wall": "back",
+        "position": 0,
+        "width": 3.5,
+        "height": 3.4,
+        "sill": 1.25,
+        "treatment": "recessed clinic daylight window"
+      },
+      {
+        "type": "window",
+        "wall": "back",
+        "position": 7.2,
+        "width": 3.5,
+        "height": 3.4,
+        "sill": 1.25,
+        "treatment": "recessed clinic daylight window"
+      }
+    ],
+    "composition": "clinic-gallery",
+    "cutaway": "front-open"
+  },
+  "lighting": {
+    "recipe": "soft daylight from three clinic windows, suspended clinical task bars, warm maple bounce",
+    "environment": "#d7e5df",
+    "key": "#fff5df",
+    "fill": "#a4c7bb",
+    "key_intensity": 2.05,
+    "fill_intensity": 1.6,
+    "exposure": 1.08,
+    "shadow_softness": 6
+  },
+  "species": {
+    "name": "Chelonians",
+    "silhouette": "chelonians",
+    "material": "matte cream ceramic with sage shell",
+    "accent_feature": "protective sage shell and role sash"
+  },
+  "agents": [
+    {
+      "handle": "tsh",
+      "role": "TSH orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Coordinating the clinic demo",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 1.05,
+      "variant": 0
+    },
+    {
+      "handle": "general-assistant",
+      "role": "Assessment support \u00b7 shared soul",
+      "station": "builder",
+      "state": "working",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Preparing a generic assessment template",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.98,
+      "variant": 1
+    },
+    {
+      "handle": "digital-director",
+      "role": "Outcome review \u00b7 shared soul",
+      "station": "reviewer",
+      "state": "working",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing aggregate outcomes",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.96,
+      "variant": 2
+    },
+    {
+      "handle": "customer-researcher",
+      "role": "Research support \u00b7 shared soul",
+      "station": "research",
+      "state": "working",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing generic research themes",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.92,
+      "variant": 3
+    },
+    {
+      "handle": "risk-reviewer",
+      "role": "Risk review \u00b7 shared soul",
+      "station": "systems",
+      "state": "working",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing privacy-safe operating risks",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.94,
+      "variant": 4
+    },
+    {
+      "handle": "video-producer",
+      "role": "Education support \u00b7 shared soul",
+      "station": "education",
+      "state": "working",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Preparing generic education materials",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.91,
+      "variant": 5
+    },
+    {
+      "handle": "systems-engineer",
+      "role": "Systems support \u00b7 shared soul",
+      "station": "builder",
+      "state": "idle",
+      "team_member": false,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": null,
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.97,
+      "variant": 6
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Clinic command board",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -8.2,
+        0,
+        2.4
+      ],
+      "rotation": 0.25,
+      "color": "#6e927a",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "builder",
+      "label": "Assessment bench",
+      "role_type": "builder",
+      "kind": "assessment-bench",
+      "position": [
+        0,
+        0,
+        4.1
+      ],
+      "rotation": -0.1,
+      "color": "#66836f",
+      "obstacle_radius": 1.6
+    },
+    {
+      "id": "reviewer",
+      "label": "Outcome review desk",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        7.5,
+        0,
+        2.4
+      ],
+      "rotation": -0.45,
+      "color": "#bc765e",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "research",
+      "label": "Shared research station",
+      "role_type": "specialist",
+      "kind": "research-bench",
+      "position": [
+        -8.7,
+        0,
+        6.2
+      ],
+      "rotation": 0.3,
+      "color": "#66836f",
+      "obstacle_radius": 1.3
+    },
+    {
+      "id": "education",
+      "label": "Education preparation",
+      "role_type": "specialist",
+      "kind": "education-bench",
+      "position": [
+        1.1,
+        0,
+        7.2
+      ],
+      "rotation": -0.1,
+      "color": "#bc765e",
+      "obstacle_radius": 1.3
+    },
+    {
+      "id": "systems",
+      "label": "Safety and systems",
+      "role_type": "specialist",
+      "kind": "systems-bench",
+      "position": [
+        10.5,
+        0,
+        -1.0
+      ],
+      "rotation": -0.6,
+      "color": "#66836f",
+      "obstacle_radius": 1.3
+    }
+  ],
+  "downtime_zone": {
+    "name": "Recovery couch and stretch area",
+    "kind": "recovery",
+    "position": [
+      8.9,
+      0,
+      -5.7
+    ],
+    "capacity": 5
+  },
+  "pet": {
+    "name": "Tempo",
+    "species": "slow-tortoise",
+    "default_state": "wander",
+    "color": "#7c9a7d",
+    "digest": {
+      "room_burn": "steady",
+      "last_success": "Generic clinic demo reviewed",
+      "last_failure": null,
+      "human_action": "Review the next privacy-safe room task."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "millwork",
+    "surface": "clinic-board",
+    "accent": "#6e927a",
+    "face": "#fff8e7",
+    "position": [
+      -12.62,
+      3.15,
+      -5.5
+    ],
+    "job_scope": [
+      "tsh",
+      "general-assistant",
+      "digital-director",
+      "customer-researcher",
+      "risk-reviewer",
+      "video-producer",
+      "systems-engineer"
+    ],
+    "jobs": [
+      {
+        "name": "tsh-supabase-backup",
+        "owner": "tsh",
+        "schedule": "daily",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 tomorrow",
+        "enabled": true
+      },
+      {
+        "name": "tsh-google-voice-inbox-watch",
+        "owner": "tsh",
+        "schedule": "every 15 minutes",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 in 15 minutes",
+        "enabled": true
+      },
+      {
+        "name": "tsh-session-invoice-watch",
+        "owner": "tsh",
+        "schedule": "hourly",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next hour",
+        "enabled": true
+      },
+      {
+        "name": "tsh-morning-briefing",
+        "owner": "general-assistant",
+        "schedule": "weekday mornings",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next weekday",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "Parallel bars and maple rehab stair circuit",
+    "clusters": [
+      {
+        "type": "parallel-bars",
+        "position": [
+          -3.7,
+          0,
+          -1.3
+        ],
+        "rotation": 0,
+        "color": "#66836f"
+      },
+      {
+        "type": "rehab-stairs",
+        "position": [
+          4.6,
+          0,
+          -2.2
+        ],
+        "rotation": -0.12,
+        "color": "#bc765e"
+      },
+      {
+        "type": "assessment-bench",
+        "position": [
+          -3.1,
+          0,
+          5.7
+        ],
+        "rotation": 0.1,
+        "color": "#66836f"
+      },
+      {
+        "type": "outcome-review",
+        "position": [
+          9.8,
+          0,
+          2.8
+        ],
+        "rotation": 0.18,
+        "color": "#6e927a"
+      },
+      {
+        "type": "stretch-mats",
+        "position": [
+          5.6,
+          0,
+          7.0
+        ],
+        "rotation": -0.1,
+        "color": "#bc765e"
+      }
+    ],
+    "accents": [
+      "parallel rails",
+      "rehab stair treads",
+      "generic assessment folios",
+      "aggregate outcome bars",
+      "stretch mats",
+      "recovery cushions",
+      "three clinic windows"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -12.62,
+      2.33,
+      6.8
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "client-notes/",
+      "health-records/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "phi",
+      "client-data",
+      "personal-paths"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "tsh.project-context.json": "69293bf808bef867963c4684b5645ed17695eeee953c93bdf42efb57f6b6b4b6"
+    },
+    "model_provider": "openai-codex",
+    "model_name": "gpt-5.6-sol-900k",
+    "llm_used": true
+  }
+}

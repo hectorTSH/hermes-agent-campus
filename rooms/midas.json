@@ -1,0 +1,375 @@
+{
+  "schema_version": "1.0.0",
+  "id": "midas",
+  "display_name": "Midas",
+  "seed": 506711429,
+  "identity_summary": "A closed walnut-and-brass war room for paper-only trading research, scenario review, and risk discipline \u2014 no live execution, credentials, or wallet material.",
+  "visual_keywords": [
+    "walnut",
+    "brass",
+    "war-room",
+    "paper-only"
+  ],
+  "palette": {
+    "background": "#23362e",
+    "wall": "#3b5245",
+    "wall_secondary": "#2d4137",
+    "floor": "#674839",
+    "trim": "#a87d3b",
+    "accent": "#c69a4a",
+    "accent_secondary": "#78937c",
+    "cream": "#f1dfb4",
+    "dark": "#1b2925"
+  },
+  "architecture": {
+    "footprint": {
+      "width": 24,
+      "depth": 18
+    },
+    "wall_height": 7.1,
+    "wall_thickness": 0.52,
+    "floor_material": "sealed walnut parquet",
+    "wall_material": "dark hunter mineral plaster",
+    "trim_style": "aged brass caps and walnut thresholds",
+    "floor_pattern": "parquet",
+    "openings": [],
+    "composition": "closed-war-room",
+    "cutaway": "corner-cutaway"
+  },
+  "lighting": {
+    "recipe": "warm brass pendants only, restrained green fill, no sky or exterior light",
+    "environment": "#16231f",
+    "key": "#f1c976",
+    "fill": "#415c4d",
+    "key_intensity": 2.2,
+    "fill_intensity": 1.45,
+    "exposure": 1.22,
+    "shadow_softness": 6
+  },
+  "species": {
+    "name": "Aureans",
+    "silhouette": "aureans",
+    "material": "matte warm-gold ceramic with walnut sash",
+    "accent_feature": "five-point crown ridge and brass collar"
+  },
+  "agents": [
+    {
+      "handle": "midas",
+      "role": "Fund orchestrator",
+      "station": "orchestrator",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing a paper-only market brief",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 1.05,
+      "variant": 0
+    },
+    {
+      "handle": "midas-cio",
+      "role": "Portfolio research",
+      "station": "builder",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Comparing paper scenarios",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 1.0,
+      "variant": 1
+    },
+    {
+      "handle": "midas-research",
+      "role": "Research reviewer",
+      "station": "reviewer",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing public research",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.96,
+      "variant": 2
+    },
+    {
+      "handle": "midas-options",
+      "role": "Options specialist",
+      "station": "options",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Comparing paper-only options scenarios",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.94,
+      "variant": 3
+    },
+    {
+      "handle": "midas-risk",
+      "role": "Risk specialist",
+      "station": "risk",
+      "state": "working",
+      "team_member": true,
+      "model": "adapter/mock",
+      "usage": "demo adapter \u00b7 light",
+      "current_work": "Reviewing paper-only risk limits",
+      "last_work": "Reviewed sanitized project work",
+      "scale": 0.98,
+      "variant": 4
+    }
+  ],
+  "stations": [
+    {
+      "id": "orchestrator",
+      "label": "Paper market board",
+      "role_type": "orchestrator",
+      "kind": "planning-board",
+      "position": [
+        -7.7,
+        0,
+        -1.8
+      ],
+      "rotation": 0.25,
+      "color": "#c69a4a",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "builder",
+      "label": "Research bank",
+      "role_type": "builder",
+      "kind": "research-bench",
+      "position": [
+        0,
+        0,
+        2.4
+      ],
+      "rotation": 0,
+      "color": "#78937c",
+      "obstacle_radius": 1.7
+    },
+    {
+      "id": "reviewer",
+      "label": "Risk review corner",
+      "role_type": "reviewer",
+      "kind": "review-desk",
+      "position": [
+        7.5,
+        0,
+        1.1
+      ],
+      "rotation": -0.45,
+      "color": "#a87d3b",
+      "obstacle_radius": 1.5
+    },
+    {
+      "id": "options",
+      "label": "Paper options desk",
+      "role_type": "specialist",
+      "kind": "options-bench",
+      "position": [
+        -8.0,
+        0,
+        5.2
+      ],
+      "rotation": 0.45,
+      "color": "#78937c",
+      "obstacle_radius": 1.35
+    },
+    {
+      "id": "risk",
+      "label": "Risk specialist desk",
+      "role_type": "specialist",
+      "kind": "risk-bench",
+      "position": [
+        8.0,
+        0,
+        5.2
+      ],
+      "rotation": -0.45,
+      "color": "#a87d3b",
+      "obstacle_radius": 1.35
+    }
+  ],
+  "downtime_zone": {
+    "name": "Leather couch and sideboard",
+    "kind": "couch",
+    "position": [
+      8.8,
+      0,
+      -3.4
+    ],
+    "capacity": 3
+  },
+  "pet": {
+    "name": "Aurum",
+    "species": "coin-scarab",
+    "default_state": "pipeline",
+    "color": "#c89d4e",
+    "digest": {
+      "room_burn": "moderate",
+      "last_success": "Paper risk review completed",
+      "last_failure": null,
+      "human_action": "Review the next paper-only scenario."
+    }
+  },
+  "jobs_wall": {
+    "label": "JOB WALL",
+    "mount": "millwork",
+    "surface": "ledger",
+    "accent": "#c69a4a",
+    "face": "#f1dfb4",
+    "position": [
+      -11.62,
+      3.2,
+      -4.0
+    ],
+    "job_scope": [
+      "midas",
+      "midas-cio",
+      "midas-research",
+      "midas-options",
+      "midas-risk"
+    ],
+    "jobs": [
+      {
+        "name": "midas-paper-market-brief",
+        "owner": "midas",
+        "schedule": "market mornings",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next market morning",
+        "enabled": true
+      },
+      {
+        "name": "midas-paper-risk-check",
+        "owner": "midas-risk",
+        "schedule": "market afternoons",
+        "last_run": "demo adapter \u00b7 successful",
+        "next_run": "demo adapter \u00b7 next market afternoon",
+        "enabled": true
+      }
+    ]
+  },
+  "props": {
+    "hero": "Paper-market wall, conceptual vault, and brass risk dials",
+    "clusters": [
+      {
+        "type": "ticker-wall",
+        "position": [
+          0,
+          0,
+          -8.45
+        ],
+        "rotation": 0,
+        "color": "#26392f"
+      },
+      {
+        "type": "vault",
+        "position": [
+          8.5,
+          0,
+          -5.7
+        ],
+        "rotation": 0,
+        "color": "#a87d3b"
+      },
+      {
+        "type": "risk-dials",
+        "position": [
+          -8.3,
+          0,
+          -7.95
+        ],
+        "rotation": 0,
+        "color": "#26392f"
+      },
+      {
+        "type": "research-screens",
+        "position": [
+          3.8,
+          0,
+          5.6
+        ],
+        "rotation": -0.35,
+        "color": "#4f3125"
+      },
+      {
+        "type": "paper-ledger",
+        "position": [
+          -1.7,
+          0,
+          5.8
+        ],
+        "rotation": 0.15,
+        "color": "#4f3125"
+      }
+    ],
+    "accents": [
+      "paper market lines",
+      "brass dials",
+      "public research screens",
+      "paper ledger folios",
+      "walnut parquet",
+      "brass pendants",
+      "conceptual vault door"
+    ]
+  },
+  "door": {
+    "label": "Campus",
+    "position": [
+      -11.62,
+      2.33,
+      5.5
+    ],
+    "destinations": [
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "tsh",
+        "label": "TSH"
+      },
+      {
+        "id": "folio-work-kits",
+        "label": "Folio Work Kits (DPF)"
+      },
+      {
+        "id": "midas",
+        "label": "Midas"
+      },
+      {
+        "id": "wanderpick",
+        "label": "WanderPick"
+      },
+      {
+        "id": "agent-staff",
+        "label": "Agent Staff"
+      }
+    ]
+  },
+  "privacy": {
+    "excluded_sources": [
+      ".env",
+      "wallets/",
+      "broker-credentials/"
+    ],
+    "prohibited_output_classes": [
+      "secrets",
+      "credentials",
+      "wallet-material",
+      "personal-paths",
+      "raw-model-payloads"
+    ],
+    "sanitized": true
+  },
+  "build_metadata": {
+    "generator_version": "1.0.0",
+    "source_hashes": {
+      "midas.project-context.json": "8b8083bceb23e38b84c35a0532da72e0f5baaaa5526b84f939f67bec3e6709c5"
+    },
+    "model_provider": "openai-codex",
+    "model_name": "gpt-5.6-sol-900k",
+    "llm_used": true
+  }
+}
