@@ -79,7 +79,7 @@ Room-specific code should be data-driven. Avoid cloning a 50 KB HTML file and pa
 
 The two user-provided references (`upload_20260830_031651_2.png` and `upload_20260830_031652_3.png`) establish the target. They are design references only and must not be redistributed with the OSS repo unless their license is known.
 
-Target language: **designed miniature architecture / polished isometric diorama**, not raw low-poly primitives and not photorealism.
+Target language: **polished stylized 3D architecture with isometric-inspired clarity**, not raw low-poly primitives and not photorealism. The references happen to depict miniature/diorama compositions; **miniature scale is not a requirement**. Campus rooms may feel full-scale and inhabitable while retaining the references’ layered geometry, bevels, matte materials, soft lighting, contact shadows, controlled palette, clean silhouettes, and purposeful detail.
 
 Required qualities:
 
@@ -94,7 +94,7 @@ Required qualities:
 - Functional storytelling: each cluster visibly communicates the project's work
 - Consistent stylization across architecture, props, pets, and agents
 - Asymmetric but balanced composition; no uniform wall-hugging clutter
-- Clean diorama presentation and readable silhouette at thumbnail size
+- Clean, deliberately composed presentation and readable silhouette at both gameplay and thumbnail size
 
 Polish comes from layering, proportion, bevels, contact shadows, color discipline, and purposeful detail—not from noisy textures or polygon count alone.
 

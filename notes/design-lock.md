@@ -25,7 +25,7 @@ The final product is a reusable **context → RoomSpec → shared renderer** eng
 
 ## Rendering quality bar
 
-Target **designed miniature architecture / polished isometric diorama**: layered façades and interiors, wall thickness, trim/recesses, restrained bevels, matte coherent materials, soft directional + environment lighting, contact shadows/AO, controlled detail hierarchy, functional storytelling, and clean silhouettes. Raw boxes with flat openings are not the target. See [open-source-room-engine.md](open-source-room-engine.md) for the full reference-derived specification.
+Target **polished stylized 3D architecture with isometric-inspired clarity**: layered façades and interiors, wall thickness, trim/recesses, restrained bevels, matte coherent materials, soft directional + environment lighting, contact shadows/AO, controlled detail hierarchy, functional storytelling, and clean silhouettes. The references happen to be miniature/diorama renders; **their scale is not a requirement**. Rooms may feel full-scale and inhabitable. Raw boxes with flat openings are not the target. See [open-source-room-engine.md](open-source-room-engine.md) for the full reference-derived specification.
 
 ## Camera
 
