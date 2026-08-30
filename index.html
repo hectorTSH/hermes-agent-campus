@@ -5,11 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Hermes Agent Campus — a RoomSpec-driven 3D view of agent projects." />
   <title>Hermes Agent Campus</title>
+  <style>
+    .file-warning{max-width:680px;margin:72px auto;padding:28px;border:1px solid #c9bca8;border-radius:18px;background:#fffaf1;color:#293536;font:16px/1.55 system-ui,-apple-system,sans-serif;box-shadow:0 18px 60px #594a3420}
+    .file-warning h1{margin:0 0 10px;font-size:28px}.file-warning p{margin:10px 0}.file-warning code{display:block;margin:16px 0;padding:13px 15px;border-radius:10px;background:#253334;color:#fff3d6;font:14px/1.4 ui-monospace,SFMono-Regular,monospace}
+    .file-warning a{display:inline-block;margin-top:6px;padding:10px 14px;border-radius:999px;background:#b94f3a;color:white;text-decoration:none;font-weight:700}
+  </style>
 </head>
 <body>
   <main id="app" aria-live="polite">
     <section id="startup" class="startup"><strong>Opening Campus…</strong><span>Validating the room before first paint.</span></section>
   </main>
+  <script>
+    if (location.protocol === 'file:') {
+      document.querySelector('#app').innerHTML = `<section class="file-warning" role="alert"><h1>Campus needs its local server</h1><p>The HTML file opened correctly, but browsers block the JavaScript modules and RoomSpec requests that power the 3D rooms when it is opened with <strong>file://</strong>.</p><p>In Terminal, from the project folder, run:</p><code>npm install\nnpm run dev</code><p>Then open the <strong>Local</strong> URL printed by Vite instead of double-clicking <code>index.html</code>.</p><a href="http://127.0.0.1:5173/?room=home">Try the default Home URL</a></section>`;
+    }
+  </script>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

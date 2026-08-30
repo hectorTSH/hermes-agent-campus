@@ -136,3 +136,10 @@ test('invalid room ids fail with a helpful first-paint error boundary', async ({
   await expect(page.locator('canvas')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
+
+test('opening index.html directly explains the local-server requirement', async ({ page }) => {
+  await page.goto(`file://${process.cwd()}/index.html`);
+  await expect(page.locator('.file-warning h1')).toHaveText('Campus needs its local server');
+  await expect(page.locator('.file-warning')).toContainText('npm run dev');
+  await expect(page.locator('.file-warning')).toContainText('file://');
+});

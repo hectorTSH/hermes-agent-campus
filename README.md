@@ -39,6 +39,8 @@ npm run dev
 
 Open <http://127.0.0.1:5173/?room=home>.
 
+Do **not** double-click `index.html` or open it with a `file://` URL. Campus uses JavaScript modules and fetches validated RoomSpecs, so it must run through Vite. If Vite chooses another port, open the `Local` URL printed in the terminal.
+
 `npm run check` validates all contexts and RoomSpecs, runs unit tests, creates a production build, starts an isolated local server, and runs the complete Playwright browser suite.
 
 ## Demo path
