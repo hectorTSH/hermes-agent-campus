@@ -28,7 +28,7 @@ Do not double-click `index.html`; `file://` cannot load the JavaScript modules o
 
 ### Option B — run on the Mac mini and control the UI from the MacBook Air
 
-This is the recommended path when the Mac mini is the machine that owns the Hermes profiles and jobs. Campus stays on the mini; the Air is only the browser/controller.
+This is the recommended path when the Mac mini owns the Hermes profiles and jobs but the Air only needs the visual Campus UI. Live operational metadata stays on the mini; remote requests fail closed.
 
 On the Mac mini:
 
@@ -40,7 +40,7 @@ npm ci
 npm run start:network
 ```
 
-`start:network` builds the production app and serves it on port `4173` over the trusted local network.
+`start:network` builds the production app and serves it on port `4173` over the trusted local network. The UI is reachable remotely, but `/api/campus-state` accepts only loopback requests; the Air therefore sees `away` agents, an empty JOB WALL, and zero token counters.
 
 From the MacBook Air, open:
 
@@ -117,7 +117,7 @@ If you run it manually instead, stop the old process and rerun `npm run start:ne
 
 ## Important agent-control limitation
 
-Campus v1 is a visual release candidate. The visible agent state, mock usage, and job timestamps come from validated RoomSpecs. The work/downtime toggle demonstrates walking and does **not** start, stop, or message a real Hermes agent.
+Campus v1 is a visual release candidate. A browser on the Campus host receives sanitized read-only Hermes state; a remote browser receives fail-closed static state. Neither path can start, stop, or message a Hermes agent.
 
 Read [MAC_MINI_AGENT_WIRING.md](MAC_MINI_AGENT_WIRING.md) before connecting local Hermes data. It defines the safe read-only boundary and makes clear which pieces are currently manual versus live.
 

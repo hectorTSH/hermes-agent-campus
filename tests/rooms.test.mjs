@@ -67,22 +67,26 @@ test('room-specific architecture and product truths are encoded in data', () => 
   assert.equal(rooms['agent-staff'].architecture.floor_pattern, 'carpet');
 });
 
-test('cron manifests are room-scoped and never leak across rooms', () => {
-  const seen = new Map();
+test('static RoomSpecs never claim live presence or ship private/demo cron fixtures', () => {
   for (const id of ids) {
     const room = rooms[id];
-    const allowed = new Set(room.jobs_wall.job_scope);
-    for (const job of room.jobs_wall.jobs) {
-      assert.ok(allowed.has(job.owner), `${id}: owner ${job.owner} is outside job_scope`);
-      assert.equal(seen.has(job.name), false, `${job.name} leaked into both ${seen.get(job.name)} and ${id}`);
-      seen.set(job.name, id);
-    }
+    assert.ok(room.agents.every(agent => agent.state === 'away'), `${id} hard-codes a live-looking agent`);
+    assert.deepEqual(room.jobs_wall.jobs, [], `${id} ships cron fixtures instead of using the local adapter`);
+    assert.doesNotMatch(JSON.stringify(room), /adapter\/mock|demo adapter/i);
   }
-  assert.deepEqual(rooms.tsh.jobs_wall.jobs.map(j => j.name), [
-    'tsh-supabase-backup',
-    'tsh-google-voice-inbox-watch',
-    'tsh-session-invoice-watch',
-    'tsh-morning-briefing'
+});
+
+test('production rosters contain only the connected local profiles approved for each room', () => {
+  assert.deepEqual(rooms.home.agents.map(a => a.handle), ['default', 'general-assistant']);
+  assert.deepEqual(rooms.wanderpick.agents.map(a => a.handle), ['wanderpick']);
+  assert.deepEqual(rooms['folio-work-kits'].agents.map(a => a.handle), [
+    'dpf', 'dpf-analytics', 'dpf-builder', 'dpf-listing', 'dpf-promo', 'dpf-scout'
+  ]);
+  assert.deepEqual(rooms.midas.agents.map(a => a.handle), [
+    'midas', 'midas-cio', 'midas-monitor', 'midas-options', 'midas-research', 'midas-risk'
+  ]);
+  assert.deepEqual(rooms['agent-staff'].agents.map(a => a.handle), [
+    'chief-of-staff', 'scout-robinson', 'demo', 'closer'
   ]);
 });
 
@@ -112,7 +116,7 @@ test('shared runtime has one mount path and all required scene registries', () =
   const checked = spawnSync(process.execPath, ['--check', runtimePath], { encoding: 'utf8' });
   assert.equal(checked.status, 0, checked.stderr);
   assert.equal((source.match(/export async function mountCampus/g) || []).length, 1);
-  for (const token of ['jobRoot', 'doorRoot', 'petApi.root', 'registry', 'Raycaster', 'controlTarget']) {
+  for (const token of ['jobRoot', 'doorRoot', 'petApi.root', 'registry', 'Raycaster', 'controlTarget', 'panelCoordinator', 'esc(spec.display_name)', 'esc(spec.identity_summary)']) {
     assert.ok(source.includes(token), `runtime missing ${token}`);
   }
 });

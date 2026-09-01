@@ -20,7 +20,7 @@ Campus is a visual operations surface: agents work or rest at role stations, pro
 
 - Not an agent executor, broker, health-record system, crawler, or secrets manager.
 - Not a recursive indexer of a home directory.
-- Not a claim that mock presence, usage, or job timestamps are live.
+- Not an agent-control surface: the included Hermes adapter is live but strictly read-only.
 - Not a collection of cloned single-file room mockups.
 - Not a hosted service or published package.
 
@@ -43,14 +43,16 @@ Do **not** double-click `index.html` or open it with a `file://` URL. Campus use
 
 `npm run check` validates all contexts and RoomSpecs, runs unit tests, creates a production build, starts an isolated local server, and runs the complete Playwright browser suite.
 
-## Demo path
+## Live local path
 
 1. Open **Home**.
-2. Click an agent name tag to inspect status, model, mock usage, and current/last work.
-3. Toggle that agent between work and downtime; the agent walks around obstacles instead of teleporting.
-4. Click the room pet for the room digest.
-5. Click the physical **JOB WALL** for only that room's jobs.
+2. Click an agent name tag to inspect read-only live status, model, coarse activity, and last-active time.
+3. Watch working agents animate at stations while idle/away agents occupy collision-safe floor positions; room pets patrol clear routes.
+4. Click the room pet for live room counts and job health.
+5. Click the physical **JOB WALL** for every cron owned by that room's allowlisted profiles, shown with an opaque per-job reference, coarse schedule, last/next time, and active, paused, or completed state.
 6. Click the physical **Campus** door, then warp to another room.
+
+The Vite server exposes the loopback-only `/api/campus-state?room=<id>` endpoint by running `scripts/live_state.py` locally. Browsers on the same Mac receive sanitized live state. Remote LAN/Tailscale browsers can load the static Campus UI, but the live endpoint returns `403` and the UI fails closed: agents become `away`, the JOB WALL empties, token counters reset to zero, and no stale green “working” state remains visible.
 
 Direct room URLs:
 
@@ -109,7 +111,7 @@ explicitly selected project-local sources
   → schema validation + fail-closed privacy scan
   → deterministic RoomSpec v1 (or hand-authored RoomSpec)
   → shared Three.js renderer/runtime
-  → optional room-scoped presence, usage, and cron adapters
+  → room-scoped, read-only local presence and cron adapter
 ```
 
 Core paths:
@@ -118,6 +120,7 @@ Core paths:
 - `schemas/room-spec.schema.json` — versioned scene contract.
 - `scripts/campus.mjs` — generate and validate CLI.
 - `scripts/lib.mjs` — schemas, deterministic generation, and privacy checks.
+- `scripts/live_state.py` — sanitized read-only Hermes presence and cron collector.
 - `src/runtime.js` — shared renderer and interaction runtime.
 - `examples/contexts/` — sanitized JSON/YAML inputs.
 - `examples/rooms/` — generated RoomSpecs.
@@ -144,7 +147,7 @@ Controls:
 
 Campus reads only sources explicitly selected by the user. ProjectContext source paths must be relative and cannot traverse upward. The sanitizer rejects personal filesystem paths, secret-like values, wallet/recovery material, PHI/client identifiers, and unrelated memory classes. Examples and production RoomSpecs contain no personal paths or credentials.
 
-The browser receives RoomSpec data, not raw provider payloads. Every room declares `jobs_wall.job_scope`; the runtime and tests prevent global cron leakage. TSH uses generic, non-identifying copy. Midas uses mock, paper-only language.
+The browser receives a validated RoomSpec plus sanitized adapter output, never raw provider payloads. Every room declares `jobs_wall.job_scope`; the adapter drops unknown profiles/jobs, and tests prevent cross-room leakage. TSH uses generic, non-identifying copy. Midas remains paper-only.
 
 ## Deterministic no-LLM generation
 
@@ -160,7 +163,7 @@ The built-in generator records selected-source hashes and `llm_used: false`. A m
 
 ## Configuration
 
-No API key is required to run the local renderer, generation, validation, or tests. See [`config.example.yaml`](config.example.yaml) for non-secret camera, map, and adapter settings. Provider credentials, if an optional adapter is developed, must come from the environment and must never enter ProjectContext, RoomSpec, logs, screenshots, or Git.
+No API key is required to run the local renderer, read-only adapter, generation, validation, or tests. See [`config.example.yaml`](config.example.yaml) for non-secret camera, map, and adapter settings. Hermes credentials never enter ProjectContext, RoomSpec, adapter responses, logs, screenshots, or Git.
 
 ## Development commands
 
@@ -181,7 +184,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) before changing schemas, runtime behavior
 - [MacBook Air setup and trusted-network access](MACBOOK_AIR_SETUP.md)
 - [Safe Mac mini Hermes-agent wiring boundary](MAC_MINI_AGENT_WIRING.md)
 
-Campus can run locally on the Air or remain on the Mac mini and be controlled from the Air over a trusted LAN or Tailscale. v1 agent controls are visual demonstrations; the wiring guide distinguishes current sanitized RoomSpec data from a future live read-only adapter.
+Campus can run locally on the Air or remain on the Mac mini and be viewed from the Air over a trusted LAN or Tailscale. Remote browsers receive the visual UI with fail-closed static state; the live read-only adapter is available only to loopback requests on the machine that owns the Hermes data. No browser action can start agents, run jobs, or send prompts.
 
 ## Historical prototypes
 

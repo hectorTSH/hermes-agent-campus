@@ -67,27 +67,53 @@
       "handle": "chief-of-staff",
       "role": "Chief of Staff orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Coordinating the local demo dispatch",
-      "last_work": "Reviewed the sanitized briefing queue",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.04,
       "variant": 0
     },
     {
-      "handle": "outreach-bot",
-      "role": "Outreach dispatch operator",
+      "handle": "scout-robinson",
+      "role": "Prospecting scout",
       "station": "builder",
-      "state": "idle",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
       "current_work": null,
-      "last_work": "Reviewed the sanitized briefing queue",
-      "scale": 0.95,
+      "last_work": "No live run observed",
+      "scale": 0.98,
       "variant": 1
+    },
+    {
+      "handle": "demo",
+      "role": "Demo and packaging",
+      "station": "builder",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.96,
+      "variant": 2
+    },
+    {
+      "handle": "closer",
+      "role": "Proposals and collections",
+      "station": "reviewer",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 1.0,
+      "variant": 3
     }
   ],
   "stations": [
@@ -142,7 +168,7 @@
       0,
       -5.9
     ],
-    "capacity": 3
+    "capacity": 4
   },
   "pet": {
     "name": "Relay",
@@ -168,20 +194,12 @@
       -4.1
     ],
     "job_scope": [
-      "agent-staff",
       "chief-of-staff",
-      "outreach-bot"
+      "scout-robinson",
+      "demo",
+      "closer"
     ],
-    "jobs": [
-      {
-        "name": "agent-staff-daily-brief",
-        "owner": "chief-of-staff",
-        "schedule": "Weekdays 08:30 local",
-        "last_run": "demo adapter \u00b7 not connected",
-        "next_run": "demo adapter \u00b7 paused",
-        "enabled": false
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Long situation table beneath named dispatch slots",
@@ -219,11 +237,11 @@
       {
         "type": "review-stamp",
         "position": [
-          7.3,
+          6.7,
           0,
-          4.7
+          5.2
         ],
-        "rotation": -0.35,
+        "rotation": 0,
         "color": "#3a4648"
       },
       {

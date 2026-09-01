@@ -62,16 +62,18 @@ Room-specific visual identity stays in validated data and named reusable geometr
 
 ## Runtime adapter boundaries
 
-The v1 RoomSpecs contain explicit mock/demo presence, usage, and job values. A future adapter may replace them only within these boundaries:
+Production RoomSpecs fail closed with `away` agents and empty job arrays. The Vite server invokes `scripts/live_state.py` to overlay current read-only Hermes metadata within these boundaries:
 
 1. Resolve the active RoomSpec first.
 2. Request only handles in `agents` and owners in `jobs_wall.job_scope`.
 3. Drop unknown global agents or jobs instead of merging them.
-4. Sanitize text before it reaches geometry, labels, panels, logs, or screenshots.
-5. Mark mock versus live values clearly.
-6. Never place tokens, API keys, PHI, client identifiers, wallets, broker credentials, or unrelated memory in a RoomSpec.
+4. Reduce activity to a fixed coarse vocabulary and replace raw cron names with opaque per-job references before anything reaches geometry, labels, panels, logs, or screenshots.
+5. Serve the live endpoint only to loopback requests; remote UI requests receive fail-closed static state.
+6. Treat fresh turn leases or bounded recent activity as working; a running gateway alone never means an agent is working.
+7. Clear working state, jobs, and token counters immediately when polling fails.
+8. Never place tokens, API keys, PHI, client identifiers, wallets, broker credentials, or unrelated memory in a RoomSpec.
 
-No adapter is required for the local demo.
+If the adapter is unavailable, every mounted room immediately transitions to the fail-closed baseline instead of preserving stale presence or jobs.
 
 ## How context becomes visual style
 
@@ -93,7 +95,7 @@ The renderer then applies a common quality grammar: layered construction, small 
 ## Interaction flow
 
 - A floating agent tag or the physical agent mesh opens the agent inspector.
-- The inspector demo toggle builds a collision-aware path and walks the figure to its station or downtime.
+- Live state changes build collision-aware paths and walk figures between stations and collision-safe downtime anchors.
 - The physical pet or its label opens the room digest.
 - The physical JOB WALL or its label opens only the active room's jobs.
 - The physical Campus door or its label opens a map titled exactly **Campus**.

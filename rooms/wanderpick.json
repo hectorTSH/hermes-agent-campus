@@ -3,7 +3,7 @@
   "id": "wanderpick",
   "display_name": "WanderPick",
   "seed": 193804725,
-  "identity_summary": "A sunlit postcard loft for local adventure discovery \u2014 live Google Places API only; no crawling and no local places index.",
+  "identity_summary": "A sunlit postcard loft for local adventure discovery — live Google Places API only; no crawling and no local places index.",
   "visual_keywords": [
     "sky",
     "postcard",
@@ -67,40 +67,14 @@
       "handle": "wanderpick",
       "role": "Product orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing live Places results",
-      "last_work": "Verified API-backed local discovery flow",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.03,
       "variant": 0
-    },
-    {
-      "handle": "place-curator",
-      "role": "Experience builder",
-      "station": "builder",
-      "state": "working",
-      "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing live Places results",
-      "last_work": "Verified API-backed local discovery flow",
-      "scale": 0.95,
-      "variant": 1
-    },
-    {
-      "handle": "trip-reviewer",
-      "role": "Adventure reviewer",
-      "station": "reviewer",
-      "state": "idle",
-      "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": null,
-      "last_work": "Verified API-backed local discovery flow",
-      "scale": 0.92,
-      "variant": 2
     }
   ],
   "stations": [
@@ -181,20 +155,9 @@
       -4.0
     ],
     "job_scope": [
-      "wanderpick",
-      "place-curator",
-      "trip-reviewer"
+      "wanderpick"
     ],
-    "jobs": [
-      {
-        "name": "wanderpick-place-health",
-        "owner": "wanderpick",
-        "schedule": "Weekdays 10:00 local",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next weekday",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Panoramic route-glass map window and day-trip kit",

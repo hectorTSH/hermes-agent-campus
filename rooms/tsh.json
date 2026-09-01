@@ -3,7 +3,7 @@
   "id": "tsh",
   "display_name": "TSH",
   "seed": 917306284,
-  "identity_summary": "A cream-and-sage clinic gallery for movement practice, generic assessment, outcome review, and recovery \u2014 with absolutely no private health or client data.",
+  "identity_summary": "A cream-and-sage clinic gallery for movement practice, generic assessment, outcome review, and recovery — with absolutely no private health or client data.",
   "visual_keywords": [
     "cream",
     "sage",
@@ -85,90 +85,90 @@
       "handle": "tsh",
       "role": "TSH orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Coordinating the clinic demo",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.05,
       "variant": 0
     },
     {
       "handle": "general-assistant",
-      "role": "Assessment support \u00b7 shared soul",
+      "role": "Assessment support",
       "station": "builder",
-      "state": "working",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Preparing a generic assessment template",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.98,
       "variant": 1
     },
     {
       "handle": "digital-director",
-      "role": "Outcome review \u00b7 shared soul",
+      "role": "Outcome review",
       "station": "reviewer",
-      "state": "working",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing aggregate outcomes",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.96,
       "variant": 2
     },
     {
       "handle": "customer-researcher",
-      "role": "Research support \u00b7 shared soul",
+      "role": "Research support",
       "station": "research",
-      "state": "working",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing generic research themes",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.92,
       "variant": 3
     },
     {
       "handle": "risk-reviewer",
-      "role": "Risk review \u00b7 shared soul",
+      "role": "Risk review",
       "station": "systems",
-      "state": "working",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing privacy-safe operating risks",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.94,
       "variant": 4
     },
     {
       "handle": "video-producer",
-      "role": "Education support \u00b7 shared soul",
+      "role": "Education support",
       "station": "education",
-      "state": "working",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Preparing generic education materials",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.91,
       "variant": 5
     },
     {
       "handle": "systems-engineer",
-      "role": "Systems support \u00b7 shared soul",
+      "role": "Systems support",
       "station": "builder",
-      "state": "idle",
+      "state": "away",
       "team_member": false,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
       "current_work": null,
-      "last_work": "Reviewed sanitized project work",
+      "last_work": "No live run observed",
       "scale": 0.97,
       "variant": 6
     }
@@ -208,9 +208,9 @@
       "role_type": "reviewer",
       "kind": "review-desk",
       "position": [
-        7.5,
+        5.0,
         0,
-        2.4
+        3.0
       ],
       "rotation": -0.45,
       "color": "#bc765e",
@@ -301,40 +301,7 @@
       "video-producer",
       "systems-engineer"
     ],
-    "jobs": [
-      {
-        "name": "tsh-supabase-backup",
-        "owner": "tsh",
-        "schedule": "daily",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 tomorrow",
-        "enabled": true
-      },
-      {
-        "name": "tsh-google-voice-inbox-watch",
-        "owner": "tsh",
-        "schedule": "every 15 minutes",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 in 15 minutes",
-        "enabled": true
-      },
-      {
-        "name": "tsh-session-invoice-watch",
-        "owner": "tsh",
-        "schedule": "hourly",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next hour",
-        "enabled": true
-      },
-      {
-        "name": "tsh-morning-briefing",
-        "owner": "general-assistant",
-        "schedule": "weekday mornings",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next weekday",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Parallel bars and maple rehab stair circuit",
@@ -372,11 +339,11 @@
       {
         "type": "outcome-review",
         "position": [
-          9.8,
+          -12.1,
           0,
-          2.8
+          -0.2
         ],
-        "rotation": 0.18,
+        "rotation": 1.5708,
         "color": "#6e927a"
       },
       {
