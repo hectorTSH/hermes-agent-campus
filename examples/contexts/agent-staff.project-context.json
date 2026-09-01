@@ -56,17 +56,20 @@
       "team_member": true
     },
     {
-      "handle": "outreach-bot",
-      "role": "dispatch operator",
+      "handle": "scout-robinson",
+      "role": "prospecting scout",
+      "team_member": true
+    },
+    {
+      "handle": "demo",
+      "role": "demo and packaging",
+      "team_member": true
+    },
+    {
+      "handle": "closer",
+      "role": "proposals and collections",
       "team_member": true
     }
   ],
-  "jobs": [
-    {
-      "name": "agent-staff-daily-brief",
-      "owner": "chief-of-staff",
-      "schedule": "Weekdays 08:30 local",
-      "enabled": false
-    }
-  ]
+  "jobs": []
 }

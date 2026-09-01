@@ -73,15 +73,28 @@
   },
   "agents": [
     {
+      "handle": "default",
+      "role": "Sancho · Home co-orchestrator",
+      "station": "reviewer",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.98,
+      "variant": 1
+    },
+    {
       "handle": "general-assistant",
       "role": "Home orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "openai-codex/gpt-5.6-sol-900k",
-      "usage": "demo adapter \u00b7 moderate",
-      "current_work": "Preparing the Campus entrypoint",
-      "last_work": "Reviewed the household command wall",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.0,
       "variant": 0
     }
@@ -164,19 +177,10 @@
       -3.55
     ],
     "job_scope": [
-      "home",
+      "default",
       "general-assistant"
     ],
-    "jobs": [
-      {
-        "name": "home-weekly-review",
-        "owner": "general-assistant",
-        "schedule": "Sunday 17:00 local",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next Sunday",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Glowing hearth and oak library corner",

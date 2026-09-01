@@ -75,12 +75,12 @@
       "handle": "studio-lead",
       "role": "orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "mock adapter",
-      "current_work": "Building the room specification",
-      "last_work": "Validated selected project context",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.92,
       "variant": 0
     },
@@ -88,12 +88,12 @@
       "handle": "prototype-builder",
       "role": "builder",
       "station": "builder",
-      "state": "idle",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "mock adapter",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
       "current_work": null,
-      "last_work": "Validated selected project context",
+      "last_work": "No live run observed",
       "scale": 0.99,
       "variant": 1
     },
@@ -101,12 +101,12 @@
       "handle": "quality-reviewer",
       "role": "reviewer",
       "station": "reviewer",
-      "state": "idle",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "mock adapter",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
       "current_work": null,
-      "last_work": "Validated selected project context",
+      "last_work": "No live run observed",
       "scale": 1.06,
       "variant": 2
     }
@@ -194,16 +194,7 @@
       "prototype-builder",
       "quality-reviewer"
     ],
-    "jobs": [
-      {
-        "name": "sample-build-check",
-        "owner": "studio-lead",
-        "schedule": "weekday mornings",
-        "last_run": "not connected",
-        "next_run": "adapter pending",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "central prototype plinth",

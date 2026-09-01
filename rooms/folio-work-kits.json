@@ -76,40 +76,79 @@
       "handle": "dpf",
       "role": "Studio orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Preparing a founder work kit",
-      "last_work": "Reviewed the sanitized product queue",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.04,
       "variant": 0
     },
     {
-      "handle": "kit-builder",
-      "role": "Product kit builder",
-      "station": "builder",
-      "state": "working",
+      "handle": "dpf-analytics",
+      "role": "Factory analytics",
+      "station": "reviewer",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Preparing a founder work kit",
-      "last_work": "Reviewed the sanitized product queue",
-      "scale": 0.96,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.94,
       "variant": 1
     },
     {
-      "handle": "quality-reviewer",
-      "role": "Print and pack reviewer",
-      "station": "reviewer",
-      "state": "idle",
+      "handle": "dpf-builder",
+      "role": "Product builder",
+      "station": "builder",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
       "current_work": null,
-      "last_work": "Reviewed the sanitized product queue",
-      "scale": 0.93,
+      "last_work": "No live run observed",
+      "scale": 0.98,
       "variant": 2
+    },
+    {
+      "handle": "dpf-listing",
+      "role": "Storefront listing specialist",
+      "station": "reviewer",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.93,
+      "variant": 3
+    },
+    {
+      "handle": "dpf-promo",
+      "role": "Promotion specialist",
+      "station": "orchestrator",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.95,
+      "variant": 4
+    },
+    {
+      "handle": "dpf-scout",
+      "role": "Product scout",
+      "station": "builder",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.92,
+      "variant": 5
     }
   ],
   "stations": [
@@ -190,21 +229,14 @@
       -4.2
     ],
     "job_scope": [
-      "folio-work-kits",
       "dpf",
-      "kit-builder",
-      "quality-reviewer"
+      "dpf-analytics",
+      "dpf-builder",
+      "dpf-listing",
+      "dpf-promo",
+      "dpf-scout"
     ],
-    "jobs": [
-      {
-        "name": "folio-kit-catalog-check",
-        "owner": "dpf",
-        "schedule": "Weekdays 09:00 local",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next weekday",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Registration-coral print press and packed-kit wall",

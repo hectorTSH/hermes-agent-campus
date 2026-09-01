@@ -3,7 +3,7 @@
   "id": "midas",
   "display_name": "Midas",
   "seed": 506711429,
-  "identity_summary": "A closed walnut-and-brass war room for paper-only trading research, scenario review, and risk discipline \u2014 no live execution, credentials, or wallet material.",
+  "identity_summary": "A closed walnut-and-brass war room for paper-only trading research, scenario review, and risk discipline — no live execution, credentials, or wallet material.",
   "visual_keywords": [
     "walnut",
     "brass",
@@ -13,7 +13,7 @@
   "palette": {
     "background": "#23362e",
     "wall": "#3b5245",
-    "wall_secondary": "#2d4137",
+    "wall_secondary": "#486153",
     "floor": "#674839",
     "trim": "#a87d3b",
     "accent": "#c69a4a",
@@ -38,11 +38,11 @@
   },
   "lighting": {
     "recipe": "warm brass pendants only, restrained green fill, no sky or exterior light",
-    "environment": "#16231f",
+    "environment": "#263a32",
     "key": "#f1c976",
-    "fill": "#415c4d",
+    "fill": "#587565",
     "key_intensity": 2.2,
-    "fill_intensity": 1.45,
+    "fill_intensity": 1.72,
     "exposure": 1.22,
     "shadow_softness": 6
   },
@@ -57,12 +57,12 @@
       "handle": "midas",
       "role": "Fund orchestrator",
       "station": "orchestrator",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing a paper-only market brief",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.05,
       "variant": 0
     },
@@ -70,53 +70,66 @@
       "handle": "midas-cio",
       "role": "Portfolio research",
       "station": "builder",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Comparing paper scenarios",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 1.0,
       "variant": 1
     },
     {
-      "handle": "midas-research",
-      "role": "Research reviewer",
+      "handle": "midas-monitor",
+      "role": "Market monitor",
       "station": "reviewer",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing public research",
-      "last_work": "Reviewed sanitized project work",
-      "scale": 0.96,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.93,
       "variant": 2
     },
     {
       "handle": "midas-options",
       "role": "Options specialist",
       "station": "options",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Comparing paper-only options scenarios",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.94,
       "variant": 3
+    },
+    {
+      "handle": "midas-research",
+      "role": "Research reviewer",
+      "station": "builder",
+      "state": "away",
+      "team_member": true,
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
+      "scale": 0.96,
+      "variant": 4
     },
     {
       "handle": "midas-risk",
       "role": "Risk specialist",
       "station": "risk",
-      "state": "working",
+      "state": "away",
       "team_member": true,
-      "model": "adapter/mock",
-      "usage": "demo adapter \u00b7 light",
-      "current_work": "Reviewing paper-only risk limits",
-      "last_work": "Reviewed sanitized project work",
+      "model": "Local profile",
+      "usage": "Awaiting live adapter",
+      "current_work": null,
+      "last_work": "No live run observed",
       "scale": 0.98,
-      "variant": 4
+      "variant": 5
     }
   ],
   "stations": [
@@ -227,28 +240,12 @@
     "job_scope": [
       "midas",
       "midas-cio",
-      "midas-research",
+      "midas-monitor",
       "midas-options",
+      "midas-research",
       "midas-risk"
     ],
-    "jobs": [
-      {
-        "name": "midas-paper-market-brief",
-        "owner": "midas",
-        "schedule": "market mornings",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next market morning",
-        "enabled": true
-      },
-      {
-        "name": "midas-paper-risk-check",
-        "owner": "midas-risk",
-        "schedule": "market afternoons",
-        "last_run": "demo adapter \u00b7 successful",
-        "next_run": "demo adapter \u00b7 next market afternoon",
-        "enabled": true
-      }
-    ]
+    "jobs": []
   },
   "props": {
     "hero": "Paper-market wall, conceptual vault, and brass risk dials",

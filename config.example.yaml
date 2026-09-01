@@ -1,5 +1,4 @@
-# Copy to config.local.yaml if you add a local adapter.
-# The renderer and built-in deterministic generator need no credentials.
+# Non-secret reference settings. The local read-only adapter needs no credentials.
 
 camera:
   view: elevated-three-quarter
@@ -25,8 +24,10 @@ agents:
   role_stations: required
 
 adapters:
-  presence: mock
-  usage: mock
-  cron: roomspec
-  # Optional future provider credentials must be supplied by environment.
+  presence: hermes-local-readonly
+  usage: coarse-live-band
+  cron: hermes-local-readonly
+  fail_closed: true
+  # Set CAMPUS_LIVE_ADAPTER=0 in the process environment to disable collection.
+  # The live endpoint is loopback-only; network clients receive fail-closed static state.
   # Never put tokens or keys in this file.

@@ -1,58 +1,114 @@
 # Wiring Campus to Hermes agents on the Mac mini
 
-This file is intentionally explicit about the security boundary and current capabilities.
+This document defines the implemented read-only integration and its security boundary.
 
-## Current v1 truth
+## Current truth
 
-Hermes Agent Campus is a static, RoomSpec-driven visual client. It does not currently connect to the Hermes gateway database, session store, profile credentials, or cron scheduler.
+Hermes Agent Campus includes a **live, local, read-only adapter**:
 
-- Agent presence, usage, and current/last work are RoomSpec values.
-- JOB WALL jobs are RoomSpec values scoped by `jobs_wall.job_scope`.
-- The work/downtime button is a visual demo and does not command a real agent.
-- The browser never receives Hermes tokens, prompts, sessions, memory, `.env`, or `auth.json`.
-
-Do not represent v1 as live command-and-control until a reviewed local adapter is implemented.
-
-## Safe manual wiring available now
-
-A bot installing Campus on the Mac mini may synchronize sanitized public-operational metadata into `rooms/*.json`.
-
-### 1. Verify Hermes locally
-
-Run on the Mac mini:
-
-```bash
-hermes doctor
-hermes status --all
-hermes profile list
-hermes cron list --all
+```text
+browser /api/campus-state?room=<id>
+  → Vite middleware (vite.config.mjs)
+  → scripts/live_state.py
+  → allowlisted profile state.db + cron/jobs.json
+  → sanitized room-scoped JSON
 ```
 
-Do not print or copy `~/.hermes/.env`, profile `.env` files, `auth.json`, provider credentials, session transcripts, memories, prompts, or tool output into Campus.
+- Agent presence comes from active turn leases or fresh bounded activity heartbeats—not from whether a profile gateway process is running.
+- JOB WALL entries come from every `cron/jobs.json` owned by handles in the active RoomSpec's `jobs_wall.job_scope`.
+- The browser can inspect state, but it cannot send prompts, start agents, run jobs, pause jobs, or mutate Hermes.
+- Production RoomSpecs fail closed with `away` agents and empty job arrays. If collection fails, Campus does not invent green statuses or fake jobs.
+- The browser never receives prompts, messages, tool arguments, absolute paths, tokens, memory, `.env`, `auth.json`, provider credentials, PHI, or wallet material.
 
-### 2. Map profiles to rooms
+## Safe fields exposed
 
-Edit only the matching `rooms/<room>.json`:
+### Agent
 
-- `agents[].handle` — profile/agent handle approved for that room
-- `agents[].role` — sanitized durable role
-- `agents[].team_member` — whether the handle actually belongs to that project team
-- `agents[].state` — `working`, `idle`, or `away`
-- `agents[].current_work` and `last_work` — generic operational summaries only
-- `jobs_wall.job_scope` — explicit allowed owner handles
-- `jobs_wall.jobs[]` — sanitized job name, owner, schedule, last/next summary, enabled state
+- allowlisted handle and optional display name
+- room role and station
+- `working`, `idle`, `away`, or recent `error`
+- configured model name
+- coarse activity such as `Live now` or `Connected · idle`
+- coarse allowlisted activity such as `Tool running: browser` or `Receiving model response`
+- relative last-active summary
+
+### Cron
+
+- opaque per-job reference label (raw cron names are not exposed)
+- owner profile
+- coarse schedule (`cron` expression, interval, or one-time)
+- active, paused, or completed state
+- last status/time
+- next run time
+
+Error bodies, prompts, scripts, delivery targets, work directories, and job payloads are deliberately omitted.
+
+## Room allowlists
+
+Edit the matching `rooms/<room>.json` only:
+
+- `agents[].handle` lists the real profiles allowed to appear in that room.
+- `jobs_wall.job_scope` lists the profile owners whose cron records may appear.
+- Unknown global profiles and jobs are dropped rather than merged.
+- Agent Staff also reads gitignored `tmp/grok-staff-presence.json` for Grok Bot staff handles that have no Hermes profile. Only RoomSpec handles are kept. Same sanitized fields; no UUIDs, paths, or transcripts.
+- `default` is displayed as **Sancho**.
+- `default` and `general-assistant` are shared helpers. When live work can be mapped to another project room, the helper appears there and is removed from Home for that state refresh.
 
 TSH rules:
 
-- No client names, conditions tied to identifiable people, health notes, appointment details, phone numbers, email addresses, or other PHI.
-- Generic souls such as `general-assistant` may appear but must keep `team_member: false`.
+- Never expose client names, conditions tied to people, appointments, phone numbers, email addresses, or other PHI.
+- Shared helpers keep `team_member: false` outside Home.
 
 Midas rules:
 
-- No wallet addresses, keys, seed/recovery material, broker credentials, account values, order payloads, or execution claims.
-- Keep paper-only language unless a separately reviewed broker adapter exists.
+- Never expose wallet addresses, keys, recovery material, broker credentials, account values, order payloads, or execution claims.
+- Campus remains paper-only unless a separately reviewed broker integration exists.
 
-### 3. Validate before serving
+## Running locally
+
+```bash
+npm install
+npx playwright install chromium
+npm run check
+npm run dev
+```
+
+Open the Local URL printed by Vite. The adapter is enabled by default. Disable it for a fail-closed static run:
+
+```bash
+CAMPUS_LIVE_ADAPTER=0 npm run dev
+```
+
+Verify the adapter without printing private state:
+
+```bash
+curl -fsS 'http://127.0.0.1:5173/api/campus-state?room=home'
+```
+
+The response must contain only the safe fields described above.
+
+## Network access
+
+The network preview command binds the static Campus UI to `0.0.0.0`:
+
+```bash
+npm run start:network
+```
+
+The live `/api/campus-state` adapter is **loopback-only**. A browser on the same Mac receives sanitized live state; any request arriving from a LAN or Tailscale address receives `403` and the UI immediately falls back to `away` agents, an empty JOB WALL, and zero token counters. This is an enforced boundary, not a documentation-only warning.
+
+Recommended topology:
+
+```text
+Browser on Campus host → 127.0.0.1:4173 → UI + sanitized live state
+Remote trusted browser → host:4173      → UI + fail-closed static state
+```
+
+Do not expose port `4173` to the public internet. Remote live state would require a separately reviewed authenticated reverse proxy or equivalent access-control layer; Campus does not ship one.
+
+## Verification gate
+
+Before serving a change:
 
 ```bash
 npm run validate
@@ -61,83 +117,10 @@ npm run build
 npm run test:e2e
 ```
 
-A failed privacy or schema test is a hard stop. Do not weaken the test to admit private data.
+The automated checks cover adapter sanitization, shared-helper room movement, stale-session false positives, unknown-profile exclusion, scoped jobs, first paint, motion, collision clearance, controls, physical interactions, and navigation.
 
-## Contract for a future live read-only adapter
+A privacy, schema, syntax, or browser-test failure is a hard stop. Do not weaken the checks to admit private data.
 
-Implement the adapter on the Mac mini, not in the public browser bundle.
+## Write/control integration remains out of scope
 
-The adapter may expose only a sanitized response such as:
-
-```json
-{
-  "schema_version": "1.0.0",
-  "room_id": "home",
-  "generated_at": "ISO-8601 timestamp",
-  "agents": [
-    {
-      "handle": "general-assistant",
-      "state": "working",
-      "current_work": "Sanitized short summary",
-      "last_work": "Sanitized short summary",
-      "usage": "low | moderate | high"
-    }
-  ],
-  "jobs": [
-    {
-      "name": "sanitized-job-name",
-      "owner": "general-assistant",
-      "schedule": "sanitized schedule",
-      "enabled": true,
-      "last_run": "success | failed | never",
-      "next_run": "sanitized relative time"
-    }
-  ]
-}
-```
-
-Required controls:
-
-1. Bind the data collector to `127.0.0.1` by default.
-2. Use an allowlist derived from the active RoomSpec's agent handles and `jobs_wall.job_scope`.
-3. Drop unknown global profiles and jobs rather than merging them.
-4. Convert token usage to coarse bands; do not expose raw prompts or tool arguments.
-5. Strip absolute paths, credentials, secrets, PHI, wallet material, identifiers, and unrelated memory.
-6. Keep browser access read-only.
-7. If the browser is remote, put the static UI and adapter behind the same authenticated Tailscale-only reverse proxy. Never expose an unauthenticated adapter on `0.0.0.0`.
-8. Log only room id, counts, status, and timestamps—never payload contents.
-9. Add adapter unit tests, cross-room leakage tests, browser tests, and a fail-closed error state before calling the wiring live.
-
-## Write/control adapter is out of scope for v1
-
-A future control adapter that starts jobs, sends prompts, or changes agent state requires a separate design and approval gate. At minimum it needs:
-
-- authenticated requests;
-- CSRF protection;
-- per-action authorization;
-- explicit confirmation for consequential actions;
-- rate limiting and replay protection;
-- audit logging;
-- no browser access to Hermes credentials;
-- Tailscale/private-network restriction;
-- a read-back verification after every state change.
-
-Until that exists, Campus controls are visual only.
-
-## Recommended deployment topology
-
-```text
-MacBook Air browser
-        │
-        │ trusted LAN or Tailscale
-        ▼
-Mac mini :4173 — static Campus UI
-        │
-        ├── rooms/*.json (sanitized v1 data)
-        │
-        └── future localhost-only read adapter
-                 │
-                 └── allowlisted Hermes profile/cron metadata
-```
-
-This keeps Hermes credentials and private state on the Mac mini while allowing the MacBook Air to view and navigate Campus reliably.
+A future adapter that starts jobs, sends prompts, or changes agents would require a separate approval-gated design with authentication, CSRF protection, authorization, rate limiting, replay protection, audit logging, private-network restriction, and read-back verification. None of those write paths exist in the current Campus runtime.

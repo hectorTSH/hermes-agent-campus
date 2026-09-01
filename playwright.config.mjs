@@ -16,7 +16,7 @@ export default defineConfig({
     screenshot: 'only-on-failure'
   },
   webServer: {
-    command: 'npm run dev -- --port 4174',
+    command: 'CAMPUS_HERMES_HOME="$PWD/test-results/empty-hermes-home" CAMPUS_GROK_PRESENCE="$PWD/test-results/empty-grok-presence.json" npm run dev -- --port 4174',
     url: 'http://127.0.0.1:4174/?room=home',
     reuseExistingServer: false,
     timeout: 120_000

@@ -4,4 +4,4 @@ Home is the Campus entrypoint: a warm late-afternoon living room, not another pr
 
 Three separate role stations remain readable without overtaking the residential identity: household command desk, writing bureau, and reading review table. The linen couch is the dedicated downtime zone. Hearthling agents use rounded ceramic forms and linen/terracotta accents. Marmalade, the house cat, represents room health and opens the digest.
 
-No personal notes, addresses, schedules, secrets, or machine-specific paths are included. Job data is an explicit demo adapter fixture scoped only to `home` and `general-assistant`.
+No personal notes, addresses, schedules, secrets, or machine-specific paths are included. Home starts fail-closed; the local read-only adapter supplies only sanitized jobs owned by `default` (Sancho) and `general-assistant`.

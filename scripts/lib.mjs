@@ -40,7 +40,7 @@ export function generateRoomSpec(context, sourcePath='project-context.json'){
     {id:'builder',label:'Builder',role_type:'builder',kind:'workbench',position:[1.5,0,-2.5],rotation:-0.5,color:colors[3]||colors[1],obstacle_radius:1.5},
     {id:'reviewer',label:'Reviewer',role_type:'reviewer',kind:'review-desk',position:[5,0,1],rotation:0.4,color:colors[4]||colors[2],obstacle_radius:1.2}
   ];
-  const agents=context.agents.map((a,i)=>({handle:a.handle,role:a.role,station:stations[i%3].id,state:i===0?'working':'idle',team_member:a.team_member,model:'adapter/mock',usage:'mock adapter',current_work:i===0?'Building the room specification':null,last_work:'Validated selected project context',scale:Number((0.92+(i%3)*0.07).toFixed(2)),variant:i%6}));
+  const agents=context.agents.map((a,i)=>({handle:a.handle,role:a.role,station:stations[i%3].id,state:'away',team_member:a.team_member,model:'Local profile',usage:'Awaiting live adapter',current_work:null,last_work:'No live run observed',scale:Number((0.92+(i%3)*0.07).toFixed(2)),variant:i%6}));
   return assertRoomSpec({
     schema_version:'1.0.0',id:context.id,display_name:context.display_name,seed,identity_summary:context.summary,visual_keywords:context.visual_identity.keywords,
     palette:{background:colors[0],wall:colors[1],wall_secondary:colors[1],floor:colors[2],trim:colors[3]||colors[2],accent:colors[4]||colors[0],accent_secondary:colors[5]||colors[3]||colors[2],cream:'#fff4dc',dark:'#263238'},
@@ -49,7 +49,7 @@ export function generateRoomSpec(context, sourcePath='project-context.json'){
     species:{name:'Contextlings',silhouette:'round-eared',material:'matte ceramic',accent_feature:'role-color sash'},agents,stations,
     downtime_zone:{name:'Window nook',kind:'rug-nook',position:[6,0,-4.5],capacity:3},
     pet:{name:'Room companion',species:'house-cat',default_state:'wander',color:colors[4]||colors[2],digest:{room_burn:'light',last_success:'RoomSpec generated',last_failure:null,human_action:'Review the generated visual identity.'}},
-    jobs_wall:{label:'JOB WALL',mount:'fascia',surface:'cork',accent:colors[4]||colors[2],face:'#fff4dc',position:[-5,2.8,-7.65],job_scope:[context.id,...context.agents.map(a=>a.handle)],jobs:context.jobs.map(j=>({name:j.name,owner:j.owner,schedule:j.schedule,last_run:'not connected',next_run:'adapter pending',enabled:j.enabled}))},
+    jobs_wall:{label:'JOB WALL',mount:'fascia',surface:'cork',accent:colors[4]||colors[2],face:'#fff4dc',position:[-5,2.8,-7.65],job_scope:[context.id,...context.agents.map(a=>a.handle)],jobs:[]},
     props:{hero:context.visual_identity.hero_feature,clusters:[{type:'hero-display',position:[placement(seed,1)*2,0,-4],rotation:0,color:colors[4]||colors[2]},{type:'material-library',position:[5,0,3],rotation:-.4,color:colors[3]||colors[1]}],accents:['layered wall caps','recessed openings','threshold trim','task cards','material samples']},
     door:{label:'Campus',position:[-9.65,2.33,4],destinations:DESTINATIONS},
     privacy:{...context.privacy,sanitized:true},build_metadata:{generator_version:'1.0.0',source_hashes:{[path.basename(sourcePath)]:sha256(sourceRaw)},model_provider:null,model_name:null,llm_used:false}
